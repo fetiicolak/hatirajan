@@ -8,8 +8,9 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 **Aşama:** Kurulum adım adım yapılıyor (README "Kurulum").
 - ✅ Adım 1 — Telegram botu açıldı (2026-09-29).
 - ✅ Adım 2 — Yerel `.env` dolduruldu (token + chat ID), `python -m hatirajan test-telegram` başarıyla gönderdi.
-- 🔲 Adım 3 — GitHub reposu (`fetiicolak/hatirajan`, public) + git init/commit/push — kullanıcı onayı bekleniyor. `gh` CLI `fetiicolak` hesabıyla oturum açık (repo, workflow yetkili).
-- 🔲 Adım 4 — Secrets (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`), Pages (`main` + `/docs`).
+- ✅ Adım 3 — Repo oluşturuldu ve gönderildi: https://github.com/fetiicolak/hatirajan (public, `main`).
+- ✅ Adım 4 — Secrets kullanıcı tarafından `gh secret set -f .env` ile girildi; Pages açıldı: https://fetiicolak.github.io/hatirajan/
+- ✅ Actions'ta `test-telegram` Telegram'a ulaştı; "Durumu kaydet" adımı `data/` yokken düşüyordu → workflow düzeltildi (`[ -d data ] || exit 0`).
 - 🔲 Adım 5 — Panel fine-grained token; Actions'ta `test-telegram` ve ilk `kontrol`.
 **Son güncelleme:** 2026-09-29
 
