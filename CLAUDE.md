@@ -5,30 +5,32 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 > Bu dosya projenin tek doğruluk kaynağıdır. Her karar, değişiklik ve tamamlanan maddeden sonra güncellenir.
 
 ## Durum
-**Aşama:** Kurulum adım adım yapılıyor (README "Kurulum").
+**Aşama:** ✅ Kurulum tamamlandı, sistem canlıda (2026-09-29).
 - ✅ Adım 1 — Telegram botu açıldı (2026-09-29).
 - ✅ Adım 2 — Yerel `.env` dolduruldu (token + chat ID), `python -m hatirajan test-telegram` başarıyla gönderdi.
 - ✅ Adım 3 — Repo oluşturuldu ve gönderildi: https://github.com/fetiicolak/hatirajan (public, `main`).
 - ✅ Adım 4 — Secrets kullanıcı tarafından `gh secret set -f .env` ile girildi; Pages açıldı: https://fetiicolak.github.io/hatirajan/
 - ✅ Actions'ta `test-telegram` Telegram'a ulaştı; "Durumu kaydet" adımı `data/` yokken düşüyordu → workflow düzeltildi (`[ -d data ] || exit 0`).
-- 🔲 Adım 5 — Panel fine-grained token; Actions'ta `test-telegram` ve ilk `kontrol`.
+- ✅ Adım 5 — Panel fine-grained token girildi; panelden kaydetme repoya commit düştü; Actions'ta ilk `kontrol` 7 kaynağın hepsini okudu.
+- ✅ Uçtan uca test — panelden eklenen özel hatırlatma (18:00) elle tetiklenen `hatirlat` ile Telegram'a ulaştı.
+- ⚠️ Yeni repoda GitHub zamanlayıcısı ilk saatlerde hiç çalışmadı (17:00 kontrol ve 18:20 hatırlat atlandı); ilk zamanlanmış çalıştırma izlenecek.
 **Son güncelleme:** 2026-09-29
 
 ## Gereksinimler (kullanıcının istekleri)
-✅ = kodlandı ve yerelde test edildi · 🔲 = kullanıcının kurulumundan sonra canlıda doğrulanacak
+✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
 - ✅🔲 R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (Actions cron 08:00 / 17:00 TR).
 - ✅🔲 R2 — Beklenen tarih/duyuru yayımlandığında bildirim gönderilsin.
 - ✅ R3 — İŞKUR Gençlik Programı takibi (görev `iskur-genclik`).
 - ✅ R4 — Gazi Erasmus Yabancı Dil Yeterlik Sınavı takibi (görev `gazi-erasmus-dil`).
 - ✅ R5 — Yeni görevler kod yazmadan eklenebilsin (`config/gorevler.json` + panel).
-- ✅🔲 R6 — Bildirim kanalı Telegram (yeni ayrı bot).
-- ✅🔲 R7 — GitHub Actions'ta çalışsın.
+- ✅✅ R6 — Bildirim kanalı Telegram (yeni ayrı bot).
+- ✅✅ R7 — GitHub Actions'ta çalışsın.
 - ✅ R8 — Tamamen ücretsiz; yapay zeka API'si yok, kural tabanlı ayıklama.
 - ✅ R9 — Sitelere nazik istemci (bekleme, gerçekçi başlıklar, Retry-After, CAPTCHA aşılmaz → uyarı).
 - ✅ R10 — Güncel CLAUDE.md.
 - ✅ R11 — Kurulum öncesi tüm noktalar konuşuldu; kurulum kullanıcının "kuruluma başlayalım" demesiyle başladı.
 - ✅ R12 — Son başvurudan 3 gün ve 1 gün önce hatırlatma.
-- ✅🔲 R13 — Kontrol paneli (GitHub Pages): görev ekle/sil, hatırlatma kuralları, özel hatırlatmalar, bulunan tarihler, "Şimdi kontrol et".
+- ✅✅ R13 — Kontrol paneli (GitHub Pages): görev ekle/sil, hatırlatma kuralları, özel hatırlatmalar, bulunan tarihler, "Şimdi kontrol et".
 - ✅ R14 — Görev ekleme Telegram'dan değil (Telegram yalnızca bildirim).
 - ✅ R15 — Haftalık özet (Pazar 20:00, panelden değiştirilebilir).
 - ✅ R16 — Başvuru, sınav, sınav yeri/salon, sonuç/kura duyurularının hepsi bildirilir (kategori simgeleriyle).
@@ -84,7 +86,7 @@ Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type
 - Koşullu istek (ETag) planlanmıştı; Gazi sunucusu bu başlıkları göndermediği için uygulanmadı.
 
 ## Bilinen sınırlar / ileride
-- GitHub cron gecikebilir; hatırlatmalar xx:20 civarı gelir.
+- GitHub cron gecikebilir; hatırlatmalar xx:20 civarı gelir. Yeni repolarda zamanlayıcının devreye girmesi birkaç saat sürebilir.
 - Duyuru içindeki PDF'ler okunmaz (link olarak mesaja eklenir).
 - Türü belirlenemeyen tarihler "diger" olarak saklanır, hatırlatma kurulmaz.
 - Başvuru süresi uzatılırsa (60 gün içinde daha geç bir son başvuru tarihi) eski tarih `gecersiz` olur.
