@@ -97,7 +97,8 @@ def _kaynak_basarili(durum: dict, url: str, simdi: datetime, gonder) -> None:
 
 
 def _duyuruyu_isle(oturum: Oturum, gorev: dict, gd: dict, d: Duyuru, ilk_tarama: bool,
-                   simdi: datetime, gonder) -> None:
+                   simdi: datetime, gonder) -> bool:
+    """Duyuruyu işler; kullanıcıya bildirildiyse True döner."""
     kayit = {"url": d.url, "baslik": d.baslik, "kategori": kategori(d.baslik),
              "bulundu": simdi.isoformat(timespec="minutes"), "olaylar": [], "ekler": []}
     try:
@@ -111,7 +112,7 @@ def _duyuruyu_isle(oturum: Oturum, gorev: dict, gd: dict, d: Duyuru, ilk_tarama:
 
     bugun = simdi.date().isoformat()
     if ilk_tarama and not any(o["tarih"] >= bugun for o in kayit["olaylar"]):
-        return  # sistem ilk kurulduğunda eski/bitmiş duyurular için bildirim atma
+        return False  # sistem ilk kurulduğunda eski/bitmiş duyurular için bildirim atma
 
     # Aynı duyuru birden fazla birim sitesinde yayımlanabiliyor: 60 gün içinde aynı başlık → tekrar bildirme
     sinir = (simdi - timedelta(days=60)).isoformat()
@@ -122,26 +123,41 @@ def _duyuruyu_isle(oturum: Oturum, gorev: dict, gd: dict, d: Duyuru, ilk_tarama:
     for o in kayit["olaylar"]:
         o.pop("alinti", None)
     if tekrar:
-        return
+        return False
     gd["duyurular"].insert(0, kayit)
     del gd["duyurular"][50:]
     yeni_olaylar = [o for o in gd["olaylar"] if o.get("duyuru_url") == d.url]
     gonder(_duyuru_mesaji(gorev, kayit, guncellenen, plan_ozeti(gorev, yeni_olaylar, simdi)))
+    return True
+
+
+def _tarama_raporu(sonuclar: list[tuple[str, int, int]], simdi: datetime) -> str:
+    """Her taramadan sonra gönderilen kısa rapor. sonuclar: (görev adı, yeni duyuru, okunamayan kaynak)."""
+    satirlar = [f"🔎 <b>Tarama tamamlandı</b> · {okunur_tarih(simdi.date())} {simdi:%H:%M}"]
+    for ad, yeni, hatali in sonuclar:
+        durum = f"{yeni} yeni duyuru (yukarıda)" if yeni else "yeni bilgi yok"
+        if hatali:
+            durum += f" · ⚠️ {hatali} kaynak okunamadı"
+        satirlar.append(f"• {html.escape(ad)}: {durum}")
+    return "\n".join(satirlar)
 
 
 def calistir(ayar: dict, durum: dict, simdi: datetime, gonder, oturum: Oturum | None = None) -> None:
     oturum = oturum or Oturum()
     bugun = simdi.date().isoformat()
+    sonuclar = []
     for gorev in ayar["gorevler"]:
         if not gorev.get("aktif", True):
             continue
         gd = depo.gorev_durumu(durum, gorev["id"])
+        yeni = hatali = 0
         for kaynak in gorev.get("kaynaklar", []):
             url = _kaynak_url(kaynak)
             try:
                 duyurular = oturum.duyurulari_listele(kaynak)
             except CekmeHatasi as e:
                 _kaynak_hatasi(durum, url, e, simdi, gonder)
+                hatali += 1
                 continue
             _kaynak_basarili(durum, url, simdi, gonder)
             ilk_tarama = url not in gd["taranan_kaynaklar"]
@@ -151,12 +167,15 @@ def calistir(ayar: dict, durum: dict, simdi: datetime, gonder, oturum: Oturum | 
                     continue
                 gd["gorulen"][kimlik] = bugun
                 if ilgili_mi(d.baslik, gorev.get("anahtar_kelimeler", []), gorev.get("dislanan_kelimeler")):
-                    _duyuruyu_isle(oturum, gorev, gd, d, ilk_tarama, simdi, gonder)
+                    yeni += _duyuruyu_isle(oturum, gorev, gd, d, ilk_tarama, simdi, gonder)
             if ilk_tarama:
                 gd["taranan_kaynaklar"].append(url)
 
         # bir yıldan eski "görüldü" kayıtlarını temizle
         sinir = (simdi - timedelta(days=365)).date().isoformat()
         gd["gorulen"] = {k: v for k, v in gd["gorulen"].items() if v >= sinir}
+        sonuclar.append((gorev["ad"], yeni, hatali))
 
+    if ayar.get("ayarlar", {}).get("tarama_raporu", {}).get("aktif") and sonuclar:
+        gonder(_tarama_raporu(sonuclar, simdi))
     durum["son_kontrol"] = simdi.isoformat(timespec="minutes")

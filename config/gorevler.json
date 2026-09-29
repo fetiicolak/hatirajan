@@ -1,5 +1,8 @@
 {
   "ayarlar": {
+    "tarama_raporu": {
+      "aktif": true
+    },
     "haftalik_ozet": {
       "aktif": true,
       "gun": 6,

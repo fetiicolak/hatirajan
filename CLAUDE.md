@@ -37,6 +37,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ R17 — Görev başına hatırlatma sayısı panelden serbestçe artırılıp azaltılır (her satır = bir mesaj).
 - ✅ R18 — Hiçbir maddi yük yok (otel-fiyat-takip ile aynı yaklaşım).
 - ✅ R19 — Varsayılan kurallar: başvuru başlangıcı olay günü 09:00, son başvuru 3 ve 1 gün önce 09:00, sınav 1 gün önce 20:00.
+- ✅ R20 — Her taramadan sonra (08:00 / 17:00) kısa rapor, yeni bilgi yoksa da gelir ("yeni bilgi yok"); panelden kapatılabilir (`ayarlar.tarama_raporu.aktif`, 2026-09-29).
 
 ## Alınan kararlar
 | Konu | Karar |
@@ -51,13 +52,14 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 | Görev tanımı | `config/gorevler.json` (panel yazar) |
 | Durum | `data/durum.json` (Actions yazar ve commit eder; panel okur) |
 | Saat dilimi | Sabit UTC+3 (`hatirajan/zaman.py`), tzdata bağımlılığı yok |
+| Tarama raporu | `ayarlar.tarama_raporu.aktif` (config'te açık; anahtar yoksa kapalı). Görev başına yeni duyuru sayısı + okunamayan kaynak sayısı |
 | İlk tarama | Kaynağın ilk taramasında eski duyurular sessizce "görüldü" sayılır; yalnızca gelecek tarihli ilgili duyuru bildirilir |
 | Kurulum sırası | 1) Claude kodu yazdı + yerel test ✅ 2) Kullanıcı: bot, repo, Secrets, Pages, panel anahtarı 3) Birlikte uçtan uca test |
 
 ## Kod haritası
 ```
 hatirajan/__main__.py    # CLI: kontrol | hatirlat | ozet | test-telegram | chat-id  [--kuru] [--simdi ISO]
-hatirajan/kontrol.py     # kaynak tarama, yeni ilgili duyuru → detay → tarih → mesaj; kaynak hata uyarısı (3. denemede bir kez)
+hatirajan/kontrol.py     # kaynak tarama, yeni ilgili duyuru → detay → tarih → mesaj; kaynak hata uyarısı (3. denemede bir kez); tarama raporu
 hatirajan/cekici.py      # nazik HTTP (Oturum), Gazi liste sayfalaması (2 sayfa), detay (.subpage-content-txt), CAPTCHA tespiti, Playwright yedeği
 hatirajan/tarihler.py    # Türkçe tarih regex'leri + en yakın anahtar kelimeyle tür sınıflama + makul aralık süzgeci
 hatirajan/metin.py       # Türkçe küçük harf/sadeleştirme, anahtar kelime ("a & b") eşleşmesi, başlıktan kategori
@@ -65,7 +67,7 @@ hatirajan/hatirlatma.py  # kural planlama, vadesi gelen hatırlatma (36 saat tol
 hatirajan/bildirim.py    # Telegram (otel-fiyat-takip/src/bildirim.py'den uyarlandı)
 hatirajan/depo.py        # config/gorevler.json ve data/durum.json okuma/yazma
 docs/                    # panel: index.html, app.js (planla() Python ile aynı mantık), style.css
-tests/test_hatirajan.py  # 21 test; tests/ornekler/ gerçek Gazi duyuru metinleri + panel_durum.json (panel önizleme)
+tests/test_hatirajan.py  # 22 test; tests/ornekler/ gerçek Gazi duyuru metinleri + panel_durum.json (panel önizleme)
 .claude/launch.json      # "panel" önizleme sunucusu (http://localhost:8765/docs/?yerel=ornek)
 ```
 

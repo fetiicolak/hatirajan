@@ -247,6 +247,7 @@ function cizAyarlar() {
   document.querySelector('[data-ayar="aktif"]').checked = oz.aktif !== false;
   document.querySelector('[data-ayar="gun"]').value = String(oz.gun ?? 6);
   document.querySelector('[data-ayar="saat"]').value = oz.saat || "20:00";
+  document.querySelector("[data-rapor]").checked = !!S.cfg.ayarlar.tarama_raporu?.aktif;
 }
 
 function kirliMi() {
@@ -262,6 +263,10 @@ function satirlar(metin) {
 
 document.addEventListener("input", (e) => {
   const el = e.target;
+  if (el.hasAttribute("data-rapor")) {
+    S.cfg.ayarlar.tarama_raporu = { aktif: el.checked };
+    return kirliMi();
+  }
   if (el.dataset.ayar) {
     const oz = S.cfg.ayarlar.haftalik_ozet;
     oz[el.dataset.ayar] = el.type === "checkbox" ? el.checked : el.dataset.ayar === "gun" ? Number(el.value) : el.value;

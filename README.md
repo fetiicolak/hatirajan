@@ -69,6 +69,7 @@ Bundan sonra her şey otomatik.
 - **Takip ayarları**:
   - *Kaynak sayfalar*: duyuru listesi linkleri. Gazi'nin `…/view/announcement-list/1?Type=1` sayfaları ve `?SearchString=` arama sayfaları doğrudan çalışır.
   - *Anahtar kelimeler*: duyuru başlığında aranır. `erasmus & dil sınav` yazarsan ikisinin birden geçmesi gerekir.
+- **Genel ayarlar**: *Her taramadan sonra rapor* açıkken 08:00 ve 17:00'de "yeni bilgi yok" dahil kısa bir rapor gelir; kapatırsan yalnızca yeni duyuru ve hatırlatmalar gelir.
 - **Yeni görev**: kaynak ve anahtar kelime ekleyip kaydet; bir sonraki kontrolde devreye girer.
 
 ## Komutlar

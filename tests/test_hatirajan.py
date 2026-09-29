@@ -197,6 +197,19 @@ class Kontrol(unittest.TestCase):
         self.calistir(SahteOturum([self.eski], {}), 2026, 9, 24, 8)
         self.assertIn("yeniden okunabiliyor", self.giden[-1])
 
+    def test_tarama_raporu_acikken_her_taramada_gelir(self):
+        self.ayar["ayarlar"]["tarama_raporu"] = {"aktif": True}
+        self.calistir(SahteOturum([self.eski], {}), 2026, 9, 23, 8)
+        self.assertEqual(len(self.giden), 1)
+        self.assertIn("Tarama tamamlandı", self.giden[0])
+        self.assertIn("Erasmus Dil: yeni bilgi yok", self.giden[0])
+
+        yeni = Duyuru("https://ydyo.gazi.edu.tr/view/announcement/2", "Değişim Programları (Erasmus vb.) Yabancı Dil Yeterlik Sınavı")
+        detay = ("Sınav 4 Kasım 2026 tarihinde yapılacaktır.", "2026-10-15")
+        self.calistir(SahteOturum([yeni, self.eski], {yeni.url: detay}), 2026, 10, 15, 17)
+        self.assertEqual(len(self.giden), 3)  # duyuru + rapor
+        self.assertIn("1 yeni duyuru", self.giden[-1])
+
 
 class Yapilandirma(unittest.TestCase):
     def test_gorevler_dosyasi_gecerli(self):
