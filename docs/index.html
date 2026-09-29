@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HatırAjan Paneli</title>
+  <meta name="description" content="Duyuru ve başvuru tarihi takip görevlerini, hatırlatmaları yönet.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⏰</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="ust">
+    <div class="ust-ic">
+      <div>
+        <h1>HatırAjan</h1>
+        <p id="durum-satiri" class="soluk">Yükleniyor…</p>
+      </div>
+      <div class="ust-butonlar">
+        <button id="btn-kontrol" class="ikincil" title="GitHub Actions'ta kontrolü hemen başlat">Şimdi kontrol et</button>
+        <button id="btn-ayarlar" class="ikincil" aria-expanded="false">Bağlantı</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="ayarlar" class="kart" hidden>
+      <h2>Bağlantı</h2>
+      <p class="soluk">Panel, görevleri GitHub reposuna kaydeder. Düzenleme için bir kez erişim anahtarı gir;
+        anahtar yalnızca bu tarayıcıda saklanır. Nasıl alınacağı README'de anlatılıyor.</p>
+      <label>Repo <input id="inp-repo" placeholder="kullanici/hatirajan" autocomplete="off"></label>
+      <label>Erişim anahtarı (fine-grained token)
+        <input id="inp-token" type="password" placeholder="github_pat_…" autocomplete="off"></label>
+      <div class="satir">
+        <button id="btn-baglan">Kaydet ve yükle</button>
+        <button id="btn-cikis" class="ikincil">Anahtarı bu cihazdan sil</button>
+      </div>
+    </section>
+
+    <div id="uyari" class="uyari" hidden></div>
+
+    <section class="kart">
+      <h2>Yaklaşan</h2>
+      <ul id="yaklasan" class="liste"></ul>
+    </section>
+
+    <div class="baslik-satiri">
+      <h2>Görevler</h2>
+      <button id="btn-yeni">+ Yeni görev</button>
+    </div>
+    <div id="gorevler"></div>
+
+    <section class="kart">
+      <h2>Genel ayarlar</h2>
+      <div class="izgara">
+        <label class="yatay"><input type="checkbox" data-ayar="aktif"> Haftalık özet mesajı</label>
+        <label>Gün
+          <select data-ayar="gun">
+            <option value="0">Pazartesi</option><option value="1">Salı</option><option value="2">Çarşamba</option>
+            <option value="3">Perşembe</option><option value="4">Cuma</option><option value="5">Cumartesi</option>
+            <option value="6">Pazar</option>
+          </select></label>
+        <label>Saat <input type="time" data-ayar="saat"></label>
+      </div>
+      <p class="soluk kucuk">GitHub zamanlayıcısı birkaç dakika gecikebilir; hatırlatmalar saatte bir (xx:20 civarı) kontrol edilir.</p>
+    </section>
+  </main>
+
+  <div id="kaydet-cubugu" class="kaydet-cubugu" hidden>
+    <span>Kaydedilmemiş değişiklikler var</span>
+    <div class="satir">
+      <button id="btn-vazgec" class="ikincil">Vazgeç</button>
+      <button id="btn-kaydet">Kaydet</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

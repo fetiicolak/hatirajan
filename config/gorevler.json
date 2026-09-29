@@ -1,0 +1,60 @@
+{
+  "ayarlar": {
+    "haftalik_ozet": {
+      "aktif": true,
+      "gun": 6,
+      "saat": "20:00"
+    },
+    "varsayilan_hatirlatmalar": [
+      {"olay": "basvuru_baslangic", "gun_once": 0, "saat": "09:00"},
+      {"olay": "basvuru_bitis", "gun_once": 3, "saat": "09:00"},
+      {"olay": "basvuru_bitis", "gun_once": 1, "saat": "09:00"},
+      {"olay": "sinav", "gun_once": 1, "saat": "20:00"}
+    ]
+  },
+  "gorevler": [
+    {
+      "id": "iskur-genclik",
+      "ad": "İŞKUR Gençlik Programı",
+      "aktif": true,
+      "kaynaklar": [
+        "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
+        "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1",
+        "https://gazi.edu.tr/view/announcement-list/1?type=1",
+        "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur"
+      ],
+      "anahtar_kelimeler": ["iskur", "gençlik programı"],
+      "dislanan_kelimeler": [],
+      "hatirlatmalar": [
+        {"olay": "basvuru_baslangic", "gun_once": 0, "saat": "09:00"},
+        {"olay": "basvuru_bitis", "gun_once": 3, "saat": "09:00"},
+        {"olay": "basvuru_bitis", "gun_once": 1, "saat": "09:00"},
+        {"olay": "sinav", "gun_once": 1, "saat": "20:00"}
+      ],
+      "ozel_hatirlatmalar": []
+    },
+    {
+      "id": "gazi-erasmus-dil",
+      "ad": "Erasmus Yabancı Dil Yeterlik Sınavı",
+      "aktif": true,
+      "kaynaklar": [
+        "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1",
+        "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1",
+        "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus"
+      ],
+      "anahtar_kelimeler": [
+        "yabancı dil yeterlik & değişim",
+        "yabancı dil yeterlik & erasmus",
+        "erasmus & dil sınav"
+      ],
+      "dislanan_kelimeler": [],
+      "hatirlatmalar": [
+        {"olay": "basvuru_baslangic", "gun_once": 0, "saat": "09:00"},
+        {"olay": "basvuru_bitis", "gun_once": 3, "saat": "09:00"},
+        {"olay": "basvuru_bitis", "gun_once": 1, "saat": "09:00"},
+        {"olay": "sinav", "gun_once": 1, "saat": "20:00"}
+      ],
+      "ozel_hatirlatmalar": []
+    }
+  ]
+}

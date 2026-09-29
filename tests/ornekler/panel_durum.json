@@ -1,0 +1,16 @@
+{
+  "son_kontrol": "2026-09-23T17:04+03:00",
+  "gorevler": {
+    "gazi-erasmus-dil": {
+      "olaylar": [
+        {"tur": "basvuru_baslangic", "tarih": "2026-10-20", "saat": null, "duyuru_url": "https://ydyo.gazi.edu.tr/view/announcement/999001", "duyuru_baslik": "4 Kasım 2026 Değişim Programları (Erasmus vb.) Yabancı Dil Yeterlik Sınavı"},
+        {"tur": "basvuru_bitis", "tarih": "2026-10-24", "saat": null, "duyuru_url": "https://ydyo.gazi.edu.tr/view/announcement/999001", "duyuru_baslik": "4 Kasım 2026 Değişim Programları (Erasmus vb.) Yabancı Dil Yeterlik Sınavı"},
+        {"tur": "sinav", "tarih": "2026-11-04", "saat": "09:30", "duyuru_url": "https://ydyo.gazi.edu.tr/view/announcement/999001", "duyuru_baslik": "4 Kasım 2026 Değişim Programları (Erasmus vb.) Yabancı Dil Yeterlik Sınavı"}
+      ],
+      "duyurular": [
+        {"url": "https://ydyo.gazi.edu.tr/view/announcement/999001", "baslik": "4 Kasım 2026 Değişim Programları (Erasmus vb.) Yabancı Dil Yeterlik Sınavı (örnek)", "bulundu": "2026-09-23T08:02+03:00"}
+      ]
+    }
+  },
+  "kaynaklar": {}
+}
