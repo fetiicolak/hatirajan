@@ -50,7 +50,12 @@
         "mediko.gazi.edu.tr/view/announcement/319968": "2026-09-29",
         "mediko.gazi.edu.tr/view/announcement/320409": "2026-09-29",
         "mediko.gazi.edu.tr/view/announcement/320707": "2026-09-29",
-        "mediko.gazi.edu.tr/view/announcement/322289": "2026-09-29"
+        "mediko.gazi.edu.tr/view/announcement/322289": "2026-09-29",
+        "mediko.gazi.edu.tr/view/announcement/326041": "2026-09-30",
+        "mediko.gazi.edu.tr/view/announcement/326044": "2026-09-30",
+        "gazi.edu.tr/view/announcement/326045": "2026-09-30",
+        "gazi.edu.tr/view/announcement/326063": "2026-09-30",
+        "gazi.edu.tr/view/announcement/326064": "2026-09-30"
       },
       "taranan_kaynaklar": [
         "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
@@ -113,41 +118,41 @@
     "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://gazi.edu.tr/view/announcement-list/1?type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-09-30T09:13+03:00"
+      "son_basari": "2026-09-30T21:25+03:00"
     }
   },
   "gonderilen_hatirlatmalar": {
     "iskur-genclik|ozel|cww1yp|18:00": "2026-09-29T18:54+03:00"
   },
-  "son_kontrol": "2026-09-30T09:13+03:00"
+  "son_kontrol": "2026-09-30T21:25+03:00"
 }
