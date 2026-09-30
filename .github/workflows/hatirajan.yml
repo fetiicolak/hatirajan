@@ -2,8 +2,9 @@ name: HatırAjan
 
 on:
   schedule:
-    - cron: "0 5,14 * * *"   # 08:00 ve 17:00 TR — kaynak kontrolü
-    - cron: "20 * * * *"     # saatlik — hatırlatmalar + Pazar 20:00 haftalık özet
+    # Saatte 2 kez. GitHub zamanlanmış çalıştırmaları atlayabildiği için 08:00/17:00 (TR) taraması
+    # sabit bir cron'a bağlı değil: "otomatik" işlem, vakti geçmiş ve yapılmamış taramayı telafi eder.
+    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       islem:
@@ -46,10 +47,8 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             ISLEM="${{ inputs.islem }}"
-          elif [ "${{ github.event.schedule }}" = "0 5,14 * * *" ]; then
-            ISLEM=kontrol
           else
-            ISLEM=hatirlat
+            ISLEM=otomatik
           fi
           echo "İşlem: $ISLEM"
           python -m hatirajan "$ISLEM"

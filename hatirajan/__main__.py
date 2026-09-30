@@ -1,5 +1,6 @@
 """HatırAjan komut satırı.
 
+  python -m hatirajan otomatik         # zamanlanmış çalıştırma: vakti geldiyse kontrol, sonra hatirlat
   python -m hatirajan kontrol          # kaynakları tara, yeni duyuruları bildir
   python -m hatirajan hatirlat         # zamanı gelen hatırlatmalar + (Pazar 20:00) haftalık özet
   python -m hatirajan ozet             # haftalık özeti hemen gönder
@@ -22,7 +23,7 @@ def main() -> int:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8")
     ayrac = argparse.ArgumentParser(prog="hatirajan", description="HatırAjan duyuru takip ajanı")
-    ayrac.add_argument("islem", choices=["kontrol", "hatirlat", "ozet", "test-telegram", "chat-id"])
+    ayrac.add_argument("islem", choices=["otomatik", "kontrol", "hatirlat", "ozet", "test-telegram", "chat-id"])
     ayrac.add_argument("--kuru", action="store_true", help="Telegram'a gönderme, durumu kaydetme")
     ayrac.add_argument("--simdi", help="ISO tarih-saat (TR), ör. 2026-10-21T09:30")
     arg = ayrac.parse_args()
@@ -45,10 +46,10 @@ def main() -> int:
     ayar = depo.gorevleri_yukle()
     durum = depo.durumu_yukle()
 
-    if arg.islem == "kontrol":
+    if arg.islem == "kontrol" or (arg.islem == "otomatik" and kontrol.kontrol_zamani_mi(durum, simdi)):
         kontrol.calistir(ayar, durum, simdi, gonder)
         print(f"Kontrol tamamlandı: {simdi:%Y-%m-%d %H:%M}")
-    elif arg.islem == "hatirlat":
+    if arg.islem in ("hatirlat", "otomatik"):
         sayi = hatirlatma.hatirlatmalari_isle(ayar, durum, simdi, gonder)
         print(f"{sayi} hatırlatma gönderildi.")
         if hatirlatma.haftalik_ozet_zamani_mi(ayar, durum, simdi):

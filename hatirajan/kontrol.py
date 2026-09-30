@@ -14,6 +14,17 @@ SIMGELER = {"basvuru": "📝", "sinav": "✏️", "sinav_yeri": "📍", "sonuc":
 KATEGORI_ADLARI = {"basvuru": "Başvuru duyurusu", "sinav": "Sınav duyurusu",
                    "sinav_yeri": "Sınav yeri / saati", "sonuc": "Sonuç duyurusu", "duyuru": "Yeni duyuru"}
 HATA_ESIGI = 3  # art arda bu kadar başarısız denemede uyarı (≈1,5 gün)
+KONTROL_SAATLERI = (8, 17)  # TR; GitHub zamanlanmış çalıştırmaları atlayabildiği için saatlik çalıştırma telafi eder
+
+
+def kontrol_zamani_mi(durum: dict, simdi: datetime) -> bool:
+    """Bugünün geçmiş en son kontrol saatinden beri tarama yapılmadıysa True."""
+    gecmis = [s for s in KONTROL_SAATLERI if simdi.hour >= s]
+    if not gecmis:
+        return False
+    slot = simdi.replace(hour=gecmis[-1], minute=0, second=0, microsecond=0)
+    son = durum.get("son_kontrol")
+    return not son or datetime.fromisoformat(son) < slot
 
 
 def _kaynak_url(kaynak) -> str:

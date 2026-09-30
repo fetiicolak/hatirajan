@@ -197,6 +197,14 @@ class Kontrol(unittest.TestCase):
         self.calistir(SahteOturum([self.eski], {}), 2026, 9, 24, 8)
         self.assertIn("yeniden okunabiliyor", self.giden[-1])
 
+    def test_kontrol_zamani_atlanan_taramayi_telafi_eder(self):
+        z = lambda s: datetime.fromisoformat(s).replace(tzinfo=TR)
+        self.assertFalse(kontrol.kontrol_zamani_mi({}, z("2026-09-30T07:40")))
+        self.assertTrue(kontrol.kontrol_zamani_mi({"son_kontrol": "2026-09-29T17:10+03:00"}, z("2026-09-30T08:37")))
+        self.assertTrue(kontrol.kontrol_zamani_mi({"son_kontrol": "2026-09-29T17:10+03:00"}, z("2026-09-30T11:07")))
+        self.assertFalse(kontrol.kontrol_zamani_mi({"son_kontrol": "2026-09-30T08:07+03:00"}, z("2026-09-30T16:37")))
+        self.assertTrue(kontrol.kontrol_zamani_mi({"son_kontrol": "2026-09-30T08:07+03:00"}, z("2026-09-30T17:07")))
+
     def test_tarama_raporu_acikken_her_taramada_gelir(self):
         self.ayar["ayarlar"]["tarama_raporu"] = {"aktif": True}
         self.calistir(SahteOturum([self.eski], {}), 2026, 9, 23, 8)

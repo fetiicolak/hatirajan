@@ -13,12 +13,12 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ Actions'ta `test-telegram` Telegram'a ulaştı; "Durumu kaydet" adımı `data/` yokken düşüyordu → workflow düzeltildi (`[ -d data ] || exit 0`).
 - ✅ Adım 5 — Panel fine-grained token girildi; panelden kaydetme repoya commit düştü; Actions'ta ilk `kontrol` 7 kaynağın hepsini okudu.
 - ✅ Uçtan uca test — panelden eklenen özel hatırlatma (18:00) elle tetiklenen `hatirlat` ile Telegram'a ulaştı.
-- ⚠️ Yeni repoda GitHub zamanlayıcısı ilk saatlerde hiç çalışmadı (17:00 kontrol ve 18:20 hatırlat atlandı); ilk zamanlanmış çalıştırma izlenecek.
-**Son güncelleme:** 2026-09-29
+- ⚠️ Zamanlayıcı 2026-09-29 19:05 UTC'de devreye girdi ama güvenilmez: 30 Eylül 08:00 kontrolü hiç başlamadı, saatlik çalıştırmaların çoğu atlandı → `otomatik` telafi modu eklendi (2026-09-30); ilk otomatik sabah/akşam taraması izlenecek.
+**Son güncelleme:** 2026-09-30
 
 ## Gereksinimler (kullanıcının istekleri)
 ✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
-- ✅🔲 R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (Actions cron 08:00 / 17:00 TR).
+- ✅🔲 R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (08:00 / 17:00 TR; saatte 2 kez çalışan `otomatik` atlanan taramayı telafi eder).
 - ✅🔲 R2 — Beklenen tarih/duyuru yayımlandığında bildirim gönderilsin.
 - ✅ R3 — İŞKUR Gençlik Programı takibi (görev `iskur-genclik`).
 - ✅ R4 — Gazi Erasmus Yabancı Dil Yeterlik Sınavı takibi (görev `gazi-erasmus-dil`).
@@ -44,7 +44,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 |---|---|
 | Dil / ortam | Python 3.12 (Actions) / 3.13 (yerel `.venv`); bağımlılıklar yalnızca `requests`, `beautifulsoup4` |
 | Bildirim | Telegram Bot API; env `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` |
-| Zamanlama | `.github/workflows/hatirajan.yml`: `0 5,14 * * *` → kontrol; `20 * * * *` → hatırlat (+ haftalık özet); `workflow_dispatch` (kontrol/hatirlat/ozet/test-telegram) |
+| Zamanlama | `.github/workflows/hatirajan.yml`: `7,37 * * * *` → `otomatik` (08:00/17:00 TR geçmiş ve `son_kontrol` o saatten eskiyse önce kontrol; her seferinde hatırlat + haftalık özet). Sebep: GitHub zamanlanmış çalıştırmaları sık atlıyor (30 Eylül 05:00 UTC kontrolü hiç başlamadı); `workflow_dispatch` (kontrol/hatirlat/ozet/test-telegram) |
 | Yapay zeka | **Yok.** İleride gerekirse ücretsiz Gemini (`gemini-2.5-flash`), Groq yedek (KPSS-Uygulamasi `supabase/functions/ai-proxy/index.ts` ile aynı ikili) |
 | Telegram | Yeni, ayrı bot (otel botundan bağımsız) |
 | Panel | GitHub Pages `docs/`; okuma anahtarsız, yazma fine-grained token ile (yalnızca kullanıcının tarayıcısında, localStorage) |
@@ -58,7 +58,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 
 ## Kod haritası
 ```
-hatirajan/__main__.py    # CLI: kontrol | hatirlat | ozet | test-telegram | chat-id  [--kuru] [--simdi ISO]
+hatirajan/__main__.py    # CLI: otomatik | kontrol | hatirlat | ozet | test-telegram | chat-id  [--kuru] [--simdi ISO]
 hatirajan/kontrol.py     # kaynak tarama, yeni ilgili duyuru → detay → tarih → mesaj; kaynak hata uyarısı (3. denemede bir kez); tarama raporu
 hatirajan/cekici.py      # nazik HTTP (Oturum), Gazi liste sayfalaması (2 sayfa), detay (.subpage-content-txt), CAPTCHA tespiti, Playwright yedeği
 hatirajan/tarihler.py    # Türkçe tarih regex'leri + en yakın anahtar kelimeyle tür sınıflama + makul aralık süzgeci
@@ -67,7 +67,7 @@ hatirajan/hatirlatma.py  # kural planlama, vadesi gelen hatırlatma (36 saat tol
 hatirajan/bildirim.py    # Telegram (otel-fiyat-takip/src/bildirim.py'den uyarlandı)
 hatirajan/depo.py        # config/gorevler.json ve data/durum.json okuma/yazma
 docs/                    # panel: index.html, app.js (planla() Python ile aynı mantık), style.css
-tests/test_hatirajan.py  # 22 test; tests/ornekler/ gerçek Gazi duyuru metinleri + panel_durum.json (panel önizleme)
+tests/test_hatirajan.py  # 23 test; tests/ornekler/ gerçek Gazi duyuru metinleri + panel_durum.json (panel önizleme)
 .claude/launch.json      # "panel" önizleme sunucusu (http://localhost:8765/docs/?yerel=ornek)
 ```
 
@@ -88,7 +88,7 @@ Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type
 - Koşullu istek (ETag) planlanmıştı; Gazi sunucusu bu başlıkları göndermediği için uygulanmadı.
 
 ## Bilinen sınırlar / ileride
-- GitHub cron gecikebilir; hatırlatmalar xx:20 civarı gelir. Yeni repolarda zamanlayıcının devreye girmesi birkaç saat sürebilir.
+- GitHub cron gecikebilir/atlayabilir; tarama 08:00/17:00'den sonraki ilk başarılı çalıştırmada (xx:07/xx:37 civarı) yapılır, hatırlatmalar da bu çalıştırmalarla gelir. Yeni repolarda zamanlayıcının devreye girmesi birkaç saat sürebilir.
 - Duyuru içindeki PDF'ler okunmaz (link olarak mesaja eklenir).
 - Türü belirlenemeyen tarihler "diger" olarak saklanır, hatırlatma kurulmaz.
 - Başvuru süresi uzatılırsa (60 gün içinde daha geç bir son başvuru tarihi) eski tarih `gecersiz` olur.

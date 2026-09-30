@@ -7,13 +7,14 @@ Tamamen ücretsizdir: GitHub Actions (zamanlayıcı) + GitHub Pages (panel) + Te
 ## Nasıl çalışır
 
 ```
-GitHub Actions ── 08:00 ve 17:00 ──► python -m hatirajan kontrol
+GitHub Actions ── saatte 2 kez (xx:07, xx:37) ──► python -m hatirajan otomatik
+   08:00 / 17:00 taraması henüz yapılmadıysa (GitHub çalıştırma atlarsa da telafi eder):
                                        ├─ config/gorevler.json'daki kaynak sayfaları okur
                                        ├─ yeni + anahtar kelimeyle eşleşen duyuruyu açar
                                        ├─ Türkçe tarihleri ayıklar (başvuru, sınav, sonuç)
                                        ├─ Telegram'a bildirir
                                        └─ data/durum.json'a yazar, repoya commit eder
-               ── her saat xx:20 ──► python -m hatirajan hatirlat
+   her çalıştırmada:
                                        ├─ zamanı gelen hatırlatmaları gönderir
                                        └─ Pazar 20:00 haftalık özet
 GitHub Pages (docs/) ── panel: görev ekle, hatırlatma kuralı ekle/sil, bulunan tarihleri gör
