@@ -13,12 +13,13 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ Actions'ta `test-telegram` Telegram'a ulaştı; "Durumu kaydet" adımı `data/` yokken düşüyordu → workflow düzeltildi (`[ -d data ] || exit 0`).
 - ✅ Adım 5 — Panel fine-grained token girildi; panelden kaydetme repoya commit düştü; Actions'ta ilk `kontrol` 7 kaynağın hepsini okudu.
 - ✅ Uçtan uca test — panelden eklenen özel hatırlatma (18:00) elle tetiklenen `hatirlat` ile Telegram'a ulaştı.
-- ⚠️ Zamanlayıcı 2026-09-29 19:05 UTC'de devreye girdi ama güvenilmez: 30 Eylül 08:00 kontrolü hiç başlamadı, saatlik çalıştırmaların çoğu atlandı → `otomatik` telafi modu eklendi (2026-09-30); ilk otomatik sabah/akşam taraması izlenecek.
-**Son güncelleme:** 2026-09-30
+- ✅ `otomatik` telafi modu canlıda doğrulandı (30 Eyl – 6 Eki): her gün iki tarama raporu geldi, 4 Ekim haftalık özeti geldi. Hiçbir tarama atlanmadı.
+- ⚠️ GitHub günde 48 zamanlanmış çalıştırmanın yalnızca 4–6'sını başlatıyor. Bu yüzden raporlar 08:00/17:00 yerine 1–6 saat gecikmeli geliyor (ör. 6 Eki 13:45, 30 Eyl 21:25).
+**Son güncelleme:** 2026-10-06
 
 ## Gereksinimler (kullanıcının istekleri)
 ✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
-- ✅🔲 R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (08:00 / 17:00 TR; saatte 2 kez çalışan `otomatik` atlanan taramayı telafi eder).
+- ✅✅ R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (08:00 / 17:00 TR; saatte 2 kez çalışan `otomatik` atlanan taramayı telafi eder; GitHub yüzünden 1–6 saat gecikme olabiliyor).
 - ✅🔲 R2 — Beklenen tarih/duyuru yayımlandığında bildirim gönderilsin.
 - ✅ R3 — İŞKUR Gençlik Programı takibi (görev `iskur-genclik`).
 - ✅ R4 — Gazi Erasmus Yabancı Dil Yeterlik Sınavı takibi (görev `gazi-erasmus-dil`).
@@ -88,7 +89,9 @@ Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type
 - Koşullu istek (ETag) planlanmıştı; Gazi sunucusu bu başlıkları göndermediği için uygulanmadı.
 
 ## Bilinen sınırlar / ileride
-- GitHub cron gecikebilir/atlayabilir; tarama 08:00/17:00'den sonraki ilk başarılı çalıştırmada (xx:07/xx:37 civarı) yapılır, hatırlatmalar da bu çalıştırmalarla gelir. Yeni repolarda zamanlayıcının devreye girmesi birkaç saat sürebilir.
+- GitHub cron çalıştırmaların çoğunu atlıyor (günde 4–6 çalıştırma). Tarama 08:00/17:00'den sonraki ilk gerçekleşen çalıştırmada yapılıyor ve bu genelde 1–6 saat sonra. Hatırlatmalar da aynı gecikmeyle geliyor.
+- Haftalık özet ancak Pazar 20:00–24:00 arasında bir çalıştırma olursa gider; bu aralıkta hiç çalıştırma olmazsa o haftanın özeti atlanır.
+- Kesin saat istenirse ücretsiz bir dış zamanlayıcı (ör. cron-job.org) 08:00 ve 17:00'de `workflow_dispatch` tetikleyebilir. Bunun için yalnızca Actions yetkili bir token o servise girilmeli; henüz uygulanmadı.
 - Duyuru içindeki PDF'ler okunmaz (link olarak mesaja eklenir).
 - Türü belirlenemeyen tarihler "diger" olarak saklanır, hatırlatma kurulmaz.
 - Başvuru süresi uzatılırsa (60 gün içinde daha geç bir son başvuru tarihi) eski tarih `gecersiz` olur.
