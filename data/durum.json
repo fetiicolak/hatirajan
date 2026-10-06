@@ -59,7 +59,9 @@
         "mediko.gazi.edu.tr/view/announcement/326112": "2026-10-02",
         "gazi.edu.tr/view/announcement/326119": "2026-10-02",
         "odm.gazi.edu.tr/view/announcement/326152": "2026-10-05",
-        "gazi.edu.tr/view/announcement/326172": "2026-10-05"
+        "gazi.edu.tr/view/announcement/326172": "2026-10-05",
+        "odm.gazi.edu.tr/view/announcement/326193": "2026-10-06",
+        "gazi.edu.tr/view/announcement/326187": "2026-10-06"
       },
       "taranan_kaynaklar": [
         "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
@@ -123,42 +125,42 @@
     "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://gazi.edu.tr/view/announcement-list/1?type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-05T20:05+03:00"
+      "son_basari": "2026-10-06T13:45+03:00"
     }
   },
   "gonderilen_hatirlatmalar": {
     "iskur-genclik|ozel|cww1yp|18:00": "2026-09-29T18:54+03:00"
   },
-  "son_kontrol": "2026-10-05T20:05+03:00",
+  "son_kontrol": "2026-10-06T13:45+03:00",
   "son_ozet_haftasi": "2026-W40"
 }
