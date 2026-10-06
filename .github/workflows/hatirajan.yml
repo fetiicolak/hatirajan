@@ -11,7 +11,8 @@ on:
         description: "Ne yapılsın?"
         type: choice
         default: kontrol
-        options: [kontrol, hatirlat, ozet, test-telegram]
+        # otomatik: dış zamanlayıcı (cron-job.org) bunu tetikler; zamanlanmış çalıştırmayla aynı iş
+        options: [kontrol, otomatik, hatirlat, ozet, test-telegram]
 
 permissions:
   contents: write

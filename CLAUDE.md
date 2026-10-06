@@ -45,7 +45,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 |---|---|
 | Dil / ortam | Python 3.12 (Actions) / 3.13 (yerel `.venv`); bağımlılıklar yalnızca `requests`, `beautifulsoup4` |
 | Bildirim | Telegram Bot API; env `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` |
-| Zamanlama | `.github/workflows/hatirajan.yml`: `7,37 * * * *` → `otomatik` (08:00/17:00 TR geçmiş ve `son_kontrol` o saatten eskiyse önce kontrol; her seferinde hatırlat + haftalık özet). Sebep: GitHub zamanlanmış çalıştırmaları sık atlıyor (30 Eylül 05:00 UTC kontrolü hiç başlamadı); `workflow_dispatch` (kontrol/hatirlat/ozet/test-telegram) |
+| Zamanlama | `.github/workflows/hatirajan.yml`: `7,37 * * * *` → `otomatik` (08:00/17:00 TR geçmiş ve `son_kontrol` o saatten eskiyse önce kontrol; her seferinde hatırlat + haftalık özet). Sebep: GitHub zamanlanmış çalıştırmaları sık atlıyor (30 Eylül 05:00 UTC kontrolü hiç başlamadı); `workflow_dispatch` (kontrol/otomatik/hatirlat/ozet/test-telegram; `otomatik` cron-job.org için) |
 | Yapay zeka | **Yok.** İleride gerekirse ücretsiz Gemini (`gemini-2.5-flash`), Groq yedek (KPSS-Uygulamasi `supabase/functions/ai-proxy/index.ts` ile aynı ikili) |
 | Telegram | Yeni, ayrı bot (otel botundan bağımsız) |
 | Panel | GitHub Pages `docs/`; okuma anahtarsız, yazma fine-grained token ile (yalnızca kullanıcının tarayıcısında, localStorage) |
@@ -91,7 +91,7 @@ Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type
 ## Bilinen sınırlar / ileride
 - GitHub cron çalıştırmaların çoğunu atlıyor (günde 4–6 çalıştırma). Tarama 08:00/17:00'den sonraki ilk gerçekleşen çalıştırmada yapılıyor ve bu genelde 1–6 saat sonra. Hatırlatmalar da aynı gecikmeyle geliyor.
 - Haftalık özet ancak Pazar 20:00–24:00 arasında bir çalıştırma olursa gider; bu aralıkta hiç çalıştırma olmazsa o haftanın özeti atlanır.
-- Kesin saat istenirse ücretsiz bir dış zamanlayıcı (ör. cron-job.org) 08:00 ve 17:00'de `workflow_dispatch` tetikleyebilir. Bunun için yalnızca Actions yetkili bir token o servise girilmeli; henüz uygulanmadı.
+- Çözüm (2026-10-06): cron-job.org saatte 2 kez (xx:05/xx:35) `workflow_dispatch` ile `islem=otomatik` tetikleyecek. Token yalnızca bu repo ve Actions yetkili olacak, kullanıcı cron-job.org'a kendisi girecek. GitHub cron'u yedek olarak kalıyor. Kurulum kullanıcıda, canlı doğrulama bekliyor.
 - Duyuru içindeki PDF'ler okunmaz (link olarak mesaja eklenir).
 - Türü belirlenemeyen tarihler "diger" olarak saklanır, hatırlatma kurulmaz.
 - Başvuru süresi uzatılırsa (60 gün içinde daha geç bir son başvuru tarihi) eski tarih `gecersiz` olur.
