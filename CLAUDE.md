@@ -15,12 +15,12 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ Uçtan uca test — panelden eklenen özel hatırlatma (18:00) elle tetiklenen `hatirlat` ile Telegram'a ulaştı.
 - ✅ `otomatik` telafi modu canlıda doğrulandı (30 Eyl – 6 Eki): her gün iki tarama raporu geldi, 4 Ekim haftalık özeti geldi. Hiçbir tarama atlanmadı.
 - ⚠️ GitHub günde 48 zamanlanmış çalıştırmanın yalnızca 4–6'sını başlatıyor. Bu yüzden raporlar 08:00/17:00 yerine 1–6 saat gecikmeli geliyor (ör. 6 Eki 13:45, 30 Eyl 21:25).
-- ✅🔲 cron-job.org dış zamanlayıcı kuruldu (2026-10-07); test 204, ilk düzenli taramalar izlenecek.
+- ✅ cron-job.org dış zamanlayıcı canlıda doğrulandı (2026-10-07). Gece boyunca her xx:05/xx:35 çalıştırması dakikasında geldi; sabah taraması 08:05'te yapıldı. Gecikme sorunu çözüldü, GitHub cron'u yedek olarak kalıyor.
 **Son güncelleme:** 2026-10-07
 
 ## Gereksinimler (kullanıcının istekleri)
 ✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
-- ✅✅ R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (08:00 / 17:00 TR; saatte 2 kez çalışan `otomatik` atlanan taramayı telafi eder; GitHub yüzünden 1–6 saat gecikme olabiliyor).
+- ✅✅ R1 — Belirlenen sayfalar her gün otomatik kontrol edilsin (08:00 / 17:00 TR; saatte 2 kez çalışan `otomatik` atlanan taramayı telafi eder; cron-job.org ile tarama 08:05/17:05'te).
 - ✅🔲 R2 — Beklenen tarih/duyuru yayımlandığında bildirim gönderilsin.
 - ✅ R3 — İŞKUR Gençlik Programı takibi (görev `iskur-genclik`).
 - ✅ R4 — Gazi Erasmus Yabancı Dil Yeterlik Sınavı takibi (görev `gazi-erasmus-dil`).
@@ -90,9 +90,8 @@ Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type
 - Koşullu istek (ETag) planlanmıştı; Gazi sunucusu bu başlıkları göndermediği için uygulanmadı.
 
 ## Bilinen sınırlar / ileride
-- GitHub cron çalıştırmaların çoğunu atlıyor (günde 4–6 çalıştırma). Tarama 08:00/17:00'den sonraki ilk gerçekleşen çalıştırmada yapılıyor ve bu genelde 1–6 saat sonra. Hatırlatmalar da aynı gecikmeyle geliyor.
-- Haftalık özet ancak Pazar 20:00–24:00 arasında bir çalıştırma olursa gider; bu aralıkta hiç çalıştırma olmazsa o haftanın özeti atlanır.
-- Çözüm (2026-10-06): cron-job.org saatte 2 kez (xx:05/xx:35) `workflow_dispatch` ile `islem=otomatik` tetikleyecek. Token yalnızca bu repo ve Actions yetkili olacak, kullanıcı cron-job.org'a kendisi girecek. GitHub cron'u yedek olarak kalıyor. Kurulum tamamlandı ve test çalıştırması 204 döndü (2026-10-07 00:40). Düzenli çalıştırma ve 08:05 taraması izlenecek. Header: `Authorization: Bearer …`, `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28`. Bu sürüm GitHub'da kullanımdan kalkıyor, sunset 2028-03-10. **Token 2027-10-05'te sona eriyor; yenilenmeli.**
+- GitHub cron çalıştırmaların çoğunu atlıyor (günde 4–6). Yalnız kalırsa tarama ve hatırlatmalar 1–6 saat gecikir. Haftalık özet de Pazar 20:00–24:00 arasında hiç çalıştırma olmazsa atlanır.
+- Çözüm: cron-job.org saatte 2 kez (xx:05/xx:35) `workflow_dispatch` ile `islem=otomatik` tetikliyor. Kurulum 2026-10-07'de yapıldı ve canlıda doğrulandı. Token yalnızca `hatirajan` reposu ve Actions yetkili, kullanıcı tarafından girildi. cron-job.org durursa sistem GitHub cron'una, yani gecikmeli çalışmaya geri döner. Header: `Authorization: Bearer …`, `Accept: application/vnd.github+json`, `X-GitHub-Api-Version: 2022-11-28`. Bu sürüm GitHub'da kullanımdan kalkıyor, sunset 2028-03-10. **Token 2027-10-05'te sona eriyor; yenilenmeli.**
 - Duyuru içindeki PDF'ler okunmaz (link olarak mesaja eklenir).
 - Türü belirlenemeyen tarihler "diger" olarak saklanır, hatırlatma kurulmaz.
 - Başvuru süresi uzatılırsa (60 gün içinde daha geç bir son başvuru tarihi) eski tarih `gecersiz` olur.
