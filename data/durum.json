@@ -62,7 +62,9 @@
         "gazi.edu.tr/view/announcement/326172": "2026-10-05",
         "odm.gazi.edu.tr/view/announcement/326193": "2026-10-06",
         "gazi.edu.tr/view/announcement/326187": "2026-10-06",
-        "gazi.edu.tr/view/announcement/326245": "2026-10-07"
+        "gazi.edu.tr/view/announcement/326245": "2026-10-07",
+        "odm.gazi.edu.tr/view/announcement/326273": "2026-10-08",
+        "gazi.edu.tr/view/announcement/326255": "2026-10-08"
       },
       "taranan_kaynaklar": [
         "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
@@ -120,48 +122,230 @@
       ],
       "duyurular": [],
       "olaylar": []
+    },
+    "beltek": {
+      "gorulen": {
+        "https://beltek.gazi.edu.tr/Announcement/Content/eb69bbad-797f-f111-8159-0050569b1334": "2026-10-08",
+        "https://beltek.gazi.edu.tr/Announcement/Content/874dda09-519d-f111-8159-0050569b1334": "2026-10-08",
+        "https://beltek.gazi.edu.tr/Announcement/Content/06e232ca-6594-f011-8158-0050569b1334": "2026-10-08",
+        "https://beltek.gazi.edu.tr/Announcement/Content/007e787a-3e33-f111-8159-0050569b1334": "2026-10-08",
+        "https://beltek.gazi.edu.tr/Announcement/Content/032bf992-546a-f111-8159-0050569b1334": "2026-10-08"
+      },
+      "taranan_kaynaklar": [
+        "https://beltek.gazi.edu.tr/"
+      ],
+      "duyurular": [],
+      "olaylar": [
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2026-11-09",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 127. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2026-11-17",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 127. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2026-12-14",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 80. dönem (3 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2026-12-22",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 80. dönem (3 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2027-01-11",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 128. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2027-01-19",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 128. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2027-03-15",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 129. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2027-03-22",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 81. dönem (3 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2027-03-23",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 129. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2027-03-30",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 81. dönem (3 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_baslangic",
+          "tarih": "2027-05-03",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 130. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        },
+        {
+          "tur": "basvuru_bitis",
+          "tarih": "2027-05-11",
+          "saat": null,
+          "duyuru_url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "duyuru_baslik": "Kayıt dönemi: 130. dönem (2 aylık)",
+          "bulundu": "2026-10-08T17:05+03:00"
+        }
+      ],
+      "takvim": {
+        "126. dönem (2 aylık)": [
+          "2026-09-14",
+          "2026-09-22"
+        ],
+        "127. dönem (2 aylık)": [
+          "2026-11-09",
+          "2026-11-17"
+        ],
+        "128. dönem (2 aylık)": [
+          "2027-01-11",
+          "2027-01-19"
+        ],
+        "129. dönem (2 aylık)": [
+          "2027-03-15",
+          "2027-03-23"
+        ],
+        "130. dönem (2 aylık)": [
+          "2027-05-03",
+          "2027-05-11"
+        ],
+        "79. dönem (3 aylık)": [
+          "2026-09-14",
+          "2026-09-22"
+        ],
+        "80. dönem (3 aylık)": [
+          "2026-12-14",
+          "2026-12-22"
+        ],
+        "81. dönem (3 aylık)": [
+          "2027-03-22",
+          "2027-03-30"
+        ]
+      }
+    },
+    "teknofest": {
+      "gorulen": {
+        "https://www.teknofest.org/tr/duyurular/teknofest-guneydogu-etkinlik-haritasi-yayinlandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/elektronik-harp-tasarimi-yarismasi-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/teknofest-kesif-oyunu-guneydoguda/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/kure-teknofest-guneydogu-madde-yazim-yarismasi-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/dikey-inisli-roket-yarismasi-final-sonuclari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/tarim-teknolojileri-yarismasi-final-siralamalari-aciklandi-2/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/blokzincir-yarismasi-final-siralamalari-aciklandi-2/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/bagimliliklarla-mucadelede-teknolojik-uygulamalar-yarismasi-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/onkolojide-3t-yarismasi-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/hackmasters-guneydogu-yarismasi-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/celikkubbe-hava-savunma-sistemleri-final-siralamalari-aciklandi/": "2026-10-08",
+        "https://www.teknofest.org/tr/duyurular/teknofest-guneydogu-15-milyon-ziyaretciyle-teknoloji-solenine-donustu/": "2026-10-08"
+      },
+      "taranan_kaynaklar": [
+        "https://www.teknofest.org/tr/content/announcements/"
+      ],
+      "duyurular": [],
+      "olaylar": []
     }
   },
   "kaynaklar": {
     "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://gazi.edu.tr/view/announcement-list/1?type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-10-08T08:05+03:00"
+      "son_basari": "2026-10-08T17:05+03:00"
+    },
+    "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi": {
+      "hata_sayisi": 0,
+      "uyari_gonderildi": false,
+      "son_basari": "2026-10-08T17:05+03:00"
+    },
+    "https://beltek.gazi.edu.tr/": {
+      "hata_sayisi": 0,
+      "uyari_gonderildi": false,
+      "son_basari": "2026-10-08T17:05+03:00"
+    },
+    "https://www.teknofest.org/tr/content/announcements/": {
+      "hata_sayisi": 0,
+      "uyari_gonderildi": false,
+      "son_basari": "2026-10-08T17:05+03:00"
     }
   },
   "gonderilen_hatirlatmalar": {
     "iskur-genclik|ozel|cww1yp|18:00": "2026-09-29T18:54+03:00"
   },
-  "son_kontrol": "2026-10-08T08:05+03:00",
+  "son_kontrol": "2026-10-08T17:05+03:00",
   "son_ozet_haftasi": "2026-W40"
 }
