@@ -69,6 +69,7 @@ Bundan sonra her şey otomatik.
 - **Özel hatırlatmalar**: serbest tarih, saat ve not ile tek seferlik mesaj.
 - **Takip ayarları**:
   - *Kaynak sayfalar*: duyuru listesi linkleri. Gazi'nin `…/view/announcement-list/1?Type=1` sayfaları ve `?SearchString=` arama sayfaları doğrudan çalışır.
+  - Kayıt takvimini tablo olarak yayımlayan sayfalar (ör. BELTEK *Kurs Takvimi*) `config/gorevler.json`'da `{"url": "…", "tur": "takvim"}` olarak yazılır. Satırlardaki ilk iki tarih kayıt başlangıcı ve bitişi sayılır, takvim değişirse haber verilir.
   - *Anahtar kelimeler*: duyuru başlığında aranır. `erasmus & dil sınav` yazarsan ikisinin birden geçmesi gerekir.
 - **Genel ayarlar**: *Her taramadan sonra rapor* açıkken 08:00 ve 17:00'de "yeni bilgi yok" dahil kısa bir rapor gelir; kapatırsan yalnızca yeni duyuru ve hatırlatmalar gelir.
 - **Yeni görev**: kaynak ve anahtar kelime ekleyip kaydet; bir sonraki kontrolde devreye girer.

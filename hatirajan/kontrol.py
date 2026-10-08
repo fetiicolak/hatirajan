@@ -4,7 +4,7 @@ import html
 from datetime import date, datetime, timedelta
 
 from . import depo
-from .cekici import CekmeHatasi, Duyuru, EngelHatasi, Oturum, duyuru_kimligi
+from .cekici import CekmeHatasi, Duyuru, EngelHatasi, Oturum, TakvimSatiri, duyuru_kimligi
 from .hatirlatma import plan_ozeti
 from .metin import ilgili_mi, kategori, sadelestir
 from .tarihler import TUR_ADLARI, tarihleri_ayikla
@@ -142,6 +142,54 @@ def _duyuruyu_isle(oturum: Oturum, gorev: dict, gd: dict, d: Duyuru, ilk_tarama:
     return True
 
 
+def _takvimi_isle(gorev: dict, gd: dict, url: str, satirlar: list[TakvimSatiri],
+                  simdi: datetime, gonder) -> int:
+    """Kayıt takvimi tablosu: yeni ya da tarihi değişen dönemlerin kayıt tarihlerini olay olarak ekler
+    ve hepsini tek mesajda bildirir. Bildirim yapıldıysa 1 döner."""
+    bugun = simdi.date().isoformat()
+    kayitli = gd.setdefault("takvim", {})  # dönem -> [kayıt başlangıcı, kayıt bitişi]
+    yeni_olaylar, satirlar_mesaj = [], []
+    for s in satirlar:
+        bas, bit = s.tarihler[0].isoformat(), s.tarihler[1].isoformat()
+        eski = kayitli.get(s.donem)
+        if eski == [bas, bit]:
+            continue
+        kayitli[s.donem] = [bas, bit]
+        if eski:  # takvim değişti: başka dönemin kullanmadığı eski tarihler geçersiz
+            kullanilan = {t for d in kayitli.values() for t in d}
+            for o in gd["olaylar"]:
+                if o.get("duyuru_url") == url and o["tarih"] in eski and o["tarih"] not in kullanilan:
+                    o["gecersiz"] = True
+        if bit < bugun:
+            continue
+        for tur, tarih in (("basvuru_baslangic", bas), ("basvuru_bitis", bit)):
+            olay = next((o for o in gd["olaylar"] if o.get("duyuru_url") == url
+                         and (o["tur"], o["tarih"]) == (tur, tarih)), None)
+            if olay:  # aynı tarihli başka dönem (ör. 2 ve 3 aylık kurslar birlikte kayıt alıyor)
+                olay.pop("gecersiz", None)
+                if s.donem not in olay["duyuru_baslik"]:
+                    olay["duyuru_baslik"] += f", {s.donem}"
+            else:
+                olay = {"tur": tur, "tarih": tarih, "saat": None, "duyuru_url": url,
+                        "duyuru_baslik": f"Kayıt dönemi: {s.donem}", "bulundu": simdi.isoformat(timespec="minutes")}
+                gd["olaylar"].append(olay)
+            yeni_olaylar.append(olay)
+        ders = f" · ders başlangıcı {okunur_tarih(s.tarihler[2])}" if len(s.tarihler) > 2 else ""
+        degisti = (" 🔄 (önceki: " + " – ".join(okunur_tarih(date.fromisoformat(t)) for t in eski) + ")") if eski else ""
+        satirlar_mesaj.append(f"• {html.escape(s.donem)}: kayıt {okunur_tarih(s.tarihler[0])} – "
+                              f"{okunur_tarih(s.tarihler[1])}{ders}{degisti}")
+    gd["olaylar"].sort(key=lambda o: o["tarih"])
+    if not satirlar_mesaj:
+        return 0
+    hatirlatmalar = plan_ozeti(gorev, yeni_olaylar, simdi)
+    mesaj = [f"🗓️ <b>{html.escape(gorev['ad'])}</b> · Kayıt takvimi", *satirlar_mesaj, f"🔗 {url}"]
+    if hatirlatmalar:
+        mesaj.append("⏰ Hatırlatmalar: " + ", ".join(hatirlatmalar[:4])
+                     + (f" (+{len(hatirlatmalar) - 4} tane daha)" if len(hatirlatmalar) > 4 else ""))
+    gonder("\n".join(mesaj))
+    return 1
+
+
 def _tarama_raporu(sonuclar: list[tuple[str, int, int]], simdi: datetime) -> str:
     """Her taramadan sonra gönderilen kısa rapor. sonuclar: (görev adı, yeni duyuru, okunamayan kaynak)."""
     satirlar = [f"🔎 <b>Tarama tamamlandı</b> · {okunur_tarih(simdi.date())} {simdi:%H:%M}"]
@@ -164,13 +212,20 @@ def calistir(ayar: dict, durum: dict, simdi: datetime, gonder, oturum: Oturum | 
         yeni = hatali = 0
         for kaynak in gorev.get("kaynaklar", []):
             url = _kaynak_url(kaynak)
+            takvim = isinstance(kaynak, dict) and kaynak.get("tur") == "takvim"
             try:
-                duyurular = oturum.duyurulari_listele(kaynak)
+                if takvim:
+                    satirlar = oturum.takvim_satirlari(kaynak)
+                else:
+                    duyurular = oturum.duyurulari_listele(kaynak)
             except CekmeHatasi as e:
                 _kaynak_hatasi(durum, url, e, simdi, gonder)
                 hatali += 1
                 continue
             _kaynak_basarili(durum, url, simdi, gonder)
+            if takvim:
+                yeni += _takvimi_isle(gorev, gd, url, satirlar, simdi, gonder)
+                continue
             ilk_tarama = url not in gd["taranan_kaynaklar"]
             for d in reversed(duyurular):  # listeler yeniden eskiye; eskiden yeniye işle
                 kimlik = duyuru_kimligi(d.url)

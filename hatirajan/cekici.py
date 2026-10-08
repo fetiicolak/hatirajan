@@ -8,8 +8,10 @@
 """
 
 import random
+import re
 import time
 from dataclasses import dataclass
+from datetime import date
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 
 import requests
@@ -25,7 +27,8 @@ BASLIKLAR = {
     "Accept-Language": "tr-TR,tr;q=0.9,en;q=0.6",
 }
 ENGEL_IZLERI = ("captcha", "cf-challenge", "just a moment", "access denied", "erişim engellendi")
-ICERIK_SECICILERI = (".subpage-content-txt", "article", "main", "#content", ".content")
+ICERIK_SECICILERI = (".subpage-content-txt", ".borderCardMob", "article", "main", "#content", ".content")  # Gazi, TEKNOFEST, genel
+TARIH_SECICILERI = (".subpage-date-div", ".dateText")  # Gazi, TEKNOFEST
 
 
 class CekmeHatasi(Exception):
@@ -50,9 +53,19 @@ class DuyuruDetayi:
     ekler: list[str]
 
 
+@dataclass
+class TakvimSatiri:
+    donem: str          # "127. dönem (2 aylık)"
+    tarihler: list[date]  # sırasıyla kayıt başlangıcı, kayıt bitişi, (ders başlangıcı, ders bitişi)
+
+
 def _kaynak(kaynak) -> dict:
-    """Kaynak düz URL ya da {"url", "link_deseni", "sayfa_sayisi", "tarayici"} olabilir."""
+    """Kaynak düz URL ya da {"url", "tur", "link_deseni", "sayfa_sayisi", "tarayici"} olabilir.
+
+    tur: "duyuru" (varsayılan, duyuru listesi) veya "takvim" (kayıt takvimi tablosu, ör. BELTEK).
+    """
     k = {"url": kaynak} if isinstance(kaynak, str) else dict(kaynak)
+    k.setdefault("tur", "duyuru")
     gazi = urlparse(k["url"]).netloc.endswith("gazi.edu.tr")
     k.setdefault("link_deseni", "/view/announcement/" if gazi else "")
     k.setdefault("sayfa_sayisi", 2 if gazi else 1)
@@ -140,11 +153,20 @@ class Oturum:
         self._onbellek[k["url"]] = sonuc
         return sonuc
 
+    def takvim_satirlari(self, kaynak) -> list[TakvimSatiri]:
+        k = _kaynak(kaynak)
+        satirlar = takvim_satirlari(self.html_al(k["url"], k["tarayici"]))
+        if not satirlar:
+            raise CekmeHatasi("sayfada kayıt takvimi bulunamadı (site tasarımı değişmiş olabilir)")
+        return satirlar
+
     def duyuru_detayi(self, duyuru: Duyuru, tarayici: bool = False) -> DuyuruDetayi:
         corba = BeautifulSoup(self.html_al(duyuru.url, tarayici), "html.parser")
         icerik = next((corba.select_one(s) for s in ICERIK_SECICILERI if corba.select_one(s)), corba.body)
-        tarih_kutusu = corba.select_one(".subpage-date-div")
+        tarih_kutusu = next((corba.select_one(s) for s in TARIH_SECICILERI if corba.select_one(s)), None)
         yayim = yayim_tarihi(tarih_kutusu.get_text(" ", strip=True)[:40]) if tarih_kutusu else None
+        if tarih_kutusu:
+            tarih_kutusu.decompose()  # yayım tarihi metindeki tarihlerle karışmasın
         ekler = [urljoin(duyuru.url, a["href"]) for a in icerik.find_all("a", href=True)
                  if not a["href"].startswith("mailto:")] if icerik else []
         return DuyuruDetayi(
@@ -159,6 +181,28 @@ def duyuru_kimligi(url: str) -> str:
     """Aynı duyurunun farklı sorgu parametreli linklerini birleştirir (Gazi: /view/announcement/<id>)."""
     p = urlparse(url)
     return f"{p.netloc}{p.path}" if "/view/announcement/" in p.path else url
+
+
+def takvim_satirlari(html: str) -> list[TakvimSatiri]:
+    """Tablo satırlarından en az iki tarih içerenleri okur (ilk iki tarih = kayıt başlangıcı/bitişi).
+
+    BELTEK düzeni: | 2 AY (rowspan) | 126 | 14 Eylül 2026 | 22 Eylül 2026 | 28 Eylül 2026 | 22 Kasım 2026 |
+    """
+    satirlar, sure = [], ""
+    for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
+        hucreler = [td.get_text(" ", strip=True) for td in tr.find_all(["td", "th"])]
+        tarihler = [t for t in map(yayim_tarihi, hucreler) if t]
+        etiketler = [h for h in hucreler if h and not yayim_tarihi(h)]
+        for h in etiketler:
+            m = re.fullmatch(r"(\d+)\s*ay", h.lower())
+            if m:
+                sure = f"{m.group(1)} aylık"
+        if len(tarihler) < 2:
+            continue
+        no = next((h for h in etiketler if h.isdigit()), None)
+        donem = f"{no}. dönem" if no else " / ".join(etiketler) or tarihler[0].isoformat()
+        satirlar.append(TakvimSatiri(f"{donem} ({sure})" if sure else donem, tarihler))
+    return satirlar
 
 
 def engel_sayfasi_mi(html: str) -> bool:

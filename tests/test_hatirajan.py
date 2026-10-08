@@ -5,7 +5,7 @@ from datetime import date, datetime
 from pathlib import Path
 
 from hatirajan import depo, hatirlatma, kontrol
-from hatirajan.cekici import CekmeHatasi, Duyuru, DuyuruDetayi, engel_sayfasi_mi
+from hatirajan.cekici import CekmeHatasi, Duyuru, DuyuruDetayi, engel_sayfasi_mi, takvim_satirlari
 from hatirajan.metin import ilgili_mi, kategori
 from hatirajan.tarihler import tarihleri_ayikla
 from hatirajan.zaman import TR
@@ -58,6 +58,13 @@ class TarihAyiklama(unittest.TestCase):
     def test_iki_ayli_aralik(self):
         metin = "Program 03 Kasım – 24 Mayıs 2026 tarihleri arasında uygulanacaktır."
         self.assertEqual(ozet(tarihleri_ayikla(metin, date(2025, 10, 13))), [("diger", "2025-11-03", None)])
+
+    def test_baslangic_ve_son_basvuru_ayni_cumlede(self):
+        metin = "Teknoloji yarışmalarına başvurular 15 Ocak 2027 tarihinde başlayacak, son başvuru tarihi 20 Şubat 2027."
+        self.assertEqual(ozet(tarihleri_ayikla(metin, date(2026, 12, 20))),
+                         [("basvuru_baslangic", "2027-01-15", None), ("basvuru_bitis", "2027-02-20", None)])
+        self.assertEqual(ozet(tarihleri_ayikla("Başvurular 20 Şubat'a kadar devam ediyor.", date(2027, 1, 23))),
+                         [("basvuru_bitis", "2027-02-20", None)])
 
     def test_alakasiz_eski_tarih_atilir(self):
         metin = "08.03.2012 tarihli yönetmelik uyarınca sonuçlar 20 Ekim 2026'da ilan edilecektir."
@@ -138,8 +145,12 @@ class Hatirlatma(unittest.TestCase):
 class SahteOturum:
     """İnternetsiz kontrol testi için site taklidi."""
 
-    def __init__(self, liste, detaylar, hatali=()):
+    def __init__(self, liste, detaylar, hatali=(), takvim_html=""):
         self.liste, self.detaylar, self.hatali = liste, detaylar, set(hatali)
+        self.takvim_html = takvim_html
+
+    def takvim_satirlari(self, kaynak):
+        return takvim_satirlari(self.takvim_html)
 
     def duyurulari_listele(self, kaynak):
         if kaynak in self.hatali:
@@ -217,6 +228,56 @@ class Kontrol(unittest.TestCase):
         self.calistir(SahteOturum([yeni, self.eski], {yeni.url: detay}), 2026, 10, 15, 17)
         self.assertEqual(len(self.giden), 3)  # duyuru + rapor
         self.assertIn("1 yeni duyuru", self.giden[-1])
+
+
+class Takvim(unittest.TestCase):
+    KAYNAK = {"url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi", "tur": "takvim"}
+
+    def setUp(self):
+        self.html = (ORNEKLER / "beltek_takvim.html").read_text(encoding="utf-8")
+        self.ayar = {"ayarlar": {}, "gorevler": [{
+            "id": "beltek", "ad": "BELTEK Kursları", "kaynaklar": [self.KAYNAK],
+            "anahtar_kelimeler": ["kayıt"], "hatirlatmalar": KURALLAR}]}
+        self.durum = {"gorevler": {}, "kaynaklar": {}, "gonderilen_hatirlatmalar": {}}
+        self.giden = []
+
+    def calistir(self, html, *zaman):
+        kontrol.calistir(self.ayar, self.durum, datetime(*zaman, tzinfo=TR), self.giden.append,
+                         SahteOturum([], {}, takvim_html=html))
+
+    def test_gercek_beltek_takvimi_okunur(self):
+        satirlar = takvim_satirlari(self.html)
+        self.assertEqual(len(satirlar), 8)
+        self.assertEqual(satirlar[1].donem, "127. dönem (2 aylık)")
+        self.assertEqual(satirlar[1].tarihler[:2], [date(2026, 11, 9), date(2026, 11, 17)])
+        self.assertEqual(satirlar[6].donem, "80. dönem (3 aylık)")
+
+    def test_gelecek_kayitlar_tek_mesajda_bildirilir_ve_hatirlatilir(self):
+        self.calistir(self.html, 2026, 10, 7, 8)
+        self.assertEqual(len(self.giden), 1)
+        mesaj = self.giden[0]
+        self.assertIn("127. dönem (2 aylık): kayıt 9 Kasım", mesaj)
+        self.assertNotIn("126. dönem", mesaj)  # kaydı bitmiş dönem
+        olaylar = self.durum["gorevler"]["beltek"]["olaylar"]
+        self.assertIn(("basvuru_baslangic", "2026-11-09"), [(o["tur"], o["tarih"]) for o in olaylar])
+
+        self.calistir(self.html, 2026, 10, 7, 17)  # değişiklik yok → mesaj yok
+        self.assertEqual(len(self.giden), 1)
+
+        n = hatirlatma.hatirlatmalari_isle(self.ayar, self.durum, datetime(2026, 11, 9, 9, 5, tzinfo=TR), self.giden.append)
+        self.assertEqual(n, 1)
+        self.assertIn("Başvuru başlangıcı: <b>bugün</b>", self.giden[-1])
+        self.assertIn("127. dönem", self.giden[-1])
+
+    def test_takvim_degisirse_eski_tarih_gecersiz(self):
+        self.calistir(self.html, 2026, 10, 7, 8)
+        self.calistir(self.html.replace("17 Kasım 2026", "20 Kasım 2026"), 2026, 10, 8, 8)
+        self.assertEqual(len(self.giden), 2)
+        self.assertIn("🔄", self.giden[-1])
+        bitisler = {o["tarih"]: o.get("gecersiz", False) for o in self.durum["gorevler"]["beltek"]["olaylar"]
+                    if o["tur"] == "basvuru_bitis"}
+        self.assertTrue(bitisler["2026-11-17"])
+        self.assertFalse(bitisler["2026-11-20"])
 
 
 class Yapilandirma(unittest.TestCase):

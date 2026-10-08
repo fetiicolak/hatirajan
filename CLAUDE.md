@@ -16,7 +16,11 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ `otomatik` telafi modu canlıda doğrulandı (30 Eyl – 6 Eki): her gün iki tarama raporu geldi, 4 Ekim haftalık özeti geldi. Hiçbir tarama atlanmadı.
 - ⚠️ GitHub günde 48 zamanlanmış çalıştırmanın yalnızca 4–6'sını başlatıyor. Bu yüzden raporlar 08:00/17:00 yerine 1–6 saat gecikmeli geliyor (ör. 6 Eki 13:45, 30 Eyl 21:25).
 - ✅ cron-job.org dış zamanlayıcı canlıda doğrulandı (2026-10-07). Gece boyunca her xx:05/xx:35 çalıştırması dakikasında geldi; sabah taraması 08:05'te yapıldı. Gecikme sorunu çözüldü, GitHub cron'u yedek olarak kalıyor.
-**Son güncelleme:** 2026-10-07
+- ✅🔲 BELTEK görevi eklendi (2026-10-07). Canlı kuru denemede takvim doğru okundu; ilk gerçek taramada tek "Kayıt takvimi" mesajı bekleniyor.
+- ✅🔲 TEKNOFEST görevi eklendi (2026-10-08). Canlı kuru denemede 13 duyuru okundu, ilk tarama sessiz geçti.
+  - Aynı değişiklikle tarih ayıklayıcı düzeltildi: tek başvuru tarihinde tarihe en yakın "başla" ya da "son başvuru/kadar" ipucu karar veriyor.
+  - Yayım tarihi kutusu artık metinden çıkarılıyor; sayısal biçim (`gg.aa.yyyy`) de okunuyor.
+**Son güncelleme:** 2026-10-08
 
 ## Gereksinimler (kullanıcının istekleri)
 ✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
@@ -39,6 +43,8 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ R17 — Görev başına hatırlatma sayısı panelden serbestçe artırılıp azaltılır (her satır = bir mesaj).
 - ✅ R18 — Hiçbir maddi yük yok (otel-fiyat-takip ile aynı yaklaşım).
 - ✅ R19 — Varsayılan kurallar: başvuru başlangıcı olay günü 09:00, son başvuru 3 ve 1 gün önce 09:00, sınav 1 gün önce 20:00.
+- ✅ R21 — BELTEK kurs kayıt tarihleri takibi (görev `beltek`, 2026-10-07): kayıt takvimi tablosu okunur, yeni/değişen dönemler tek mesajda bildirilir, kayıt başlangıcından 1 gün önce 20:00 ve o gün 08:30 hatırlatılır (kontenjan sırayla dolduğu için).
+- ✅ R22 — TEKNOFEST üniversite öğrencisi yarışmaları başvuru takibi (görev `teknofest`, 2026-10-08): duyurularda "başvuru" / "üniversite öğrencileri" geçenler bildirilir. Hatırlatmalar: başlangıç günü 09:00, son başvurudan 7, 3 ve 1 gün önce 09:00.
 - ✅ R20 — Her taramadan sonra (08:00 / 17:00) kısa rapor, yeni bilgi yoksa da gelir ("yeni bilgi yok"); panelden kapatılabilir (`ayarlar.tarama_raporu.aktif`, 2026-09-29).
 
 ## Alınan kararlar
@@ -55,6 +61,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 | Durum | `data/durum.json` (Actions yazar ve commit eder; panel okur) |
 | Saat dilimi | Sabit UTC+3 (`hatirajan/zaman.py`), tzdata bağımlılığı yok |
 | Tarama raporu | `ayarlar.tarama_raporu.aktif` (config'te açık; anahtar yoksa kapalı). Görev başına yeni duyuru sayısı + okunamayan kaynak sayısı |
+| Takvim kaynağı | `{"url": …, "tur": "takvim"}`: sayfadaki tablo satırlarından ilk iki tarih kayıt başlangıcı/bitişi sayılır (`cekici.takvim_satirlari`). Dönem başına tarihler `gorevler.<id>.takvim`'de saklanır; değişirse eski tarih `gecersiz`. Duyuru yolundaki "60 gün içinde uzatma" kuralı burada uygulanmaz, çünkü ardışık dönemleri yanlışlıkla geçersiz sayardı. İlk taramada da gelecek dönemler bildirilir |
 | İlk tarama | Kaynağın ilk taramasında eski duyurular sessizce "görüldü" sayılır; yalnızca gelecek tarihli ilgili duyuru bildirilir |
 | Kurulum sırası | 1) Claude kodu yazdı + yerel test ✅ 2) Kullanıcı: bot, repo, Secrets, Pages, panel anahtarı 3) Birlikte uçtan uca test |
 
@@ -62,14 +69,14 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 ```
 hatirajan/__main__.py    # CLI: otomatik | kontrol | hatirlat | ozet | test-telegram | chat-id  [--kuru] [--simdi ISO]
 hatirajan/kontrol.py     # kaynak tarama, yeni ilgili duyuru → detay → tarih → mesaj; kaynak hata uyarısı (3. denemede bir kez); tarama raporu
-hatirajan/cekici.py      # nazik HTTP (Oturum), Gazi liste sayfalaması (2 sayfa), detay (.subpage-content-txt), CAPTCHA tespiti, Playwright yedeği
+hatirajan/cekici.py      # nazik HTTP (Oturum), Gazi liste sayfalaması (2 sayfa), detay (Gazi .subpage-content-txt / TEKNOFEST .borderCardMob), kayıt takvimi tablosu, CAPTCHA tespiti, Playwright yedeği
 hatirajan/tarihler.py    # Türkçe tarih regex'leri + en yakın anahtar kelimeyle tür sınıflama + makul aralık süzgeci
 hatirajan/metin.py       # Türkçe küçük harf/sadeleştirme, anahtar kelime ("a & b") eşleşmesi, başlıktan kategori
 hatirajan/hatirlatma.py  # kural planlama, vadesi gelen hatırlatma (36 saat tolerans, olay başına tek mesaj), haftalık özet
 hatirajan/bildirim.py    # Telegram (otel-fiyat-takip/src/bildirim.py'den uyarlandı)
 hatirajan/depo.py        # config/gorevler.json ve data/durum.json okuma/yazma
 docs/                    # panel: index.html, app.js (planla() Python ile aynı mantık), style.css
-tests/test_hatirajan.py  # 23 test; tests/ornekler/ gerçek Gazi duyuru metinleri + panel_durum.json (panel önizleme)
+tests/test_hatirajan.py  # 27 test; tests/ornekler/ gerçek Gazi duyuru metinleri, beltek_takvim.html + panel_durum.json (panel önizleme)
 .claude/launch.json      # "panel" önizleme sunucusu (http://localhost:8765/docs/?yerel=ornek)
 ```
 
@@ -80,6 +87,16 @@ Yol: `C:\Projeler\Fiyat Takip Uygulaması` · GitHub: `fetiicolak/otel-fiyat-tak
 Gazi'nin tüm birim siteleri aynı CMS: liste `…/view/announcement-list/1?Type=1` (sayfa başına 6 duyuru; sayfa N: `?id=N&type=1`), arama `?id=1&type=1&SearchString=<kelime>`, detay `/view/announcement/<id>`. Statik HTML, ETag/Last-Modified yok.
 - **İŞKUR Gençlik Programı**: mediko, odm, gazi.edu.tr ana liste + `mediko…SearchString=işkur`. Anahtar: `iskur`, `gençlik programı`. Gazi, başvuru/kura/sonuç duyurularını SKS (mediko) sitesinde yayımlıyor. `genclik.iskur.gov.tr` yerelden çözümlenmedi, kaynak değil.
 - **Erasmus dil sınavı**: ydyo, erasmus + `ydyo…SearchString=erasmus`. Anahtar: `yabancı dil yeterlik & değişim`, `yabancı dil yeterlik & erasmus`, `erasmus & dil sınav`. Sınav yılda 2 kez (Mart, Kasım); başvuru formu linki duyurunun içinde (drive.gazi.edu.tr).
+- **BELTEK** (Gazi Mesleki Teknik Eğitim Kursları, ücretsiz; 2026-10-07 incelendi): ayrı site `beltek.gazi.edu.tr`, farklı CMS.
+  - Yıllık takvim `…/Content/Index/Kurs-Takvimi` sayfasında tablo olarak yayımlanıyor.
+  - 2 aylık dönemler: 127 (kayıt 9–17 Kas 2026), 128 (11–19 Oca 2027), 129 (15–23 Mar 2027), 130 (3–11 May 2027).
+  - 3 aylık dönemler: 80 (14–22 Ara 2026), 81 (22–30 Mar 2027).
+  - Kayıt: siteden "Kursiyer Ön Bilgi Girişi" (`/PreRegistration/Home`) + kayıt bürosunda kesin kayıt (kimlik + öğrenim belgesi). Önce gelen alınır.
+  - Duyurular ana sayfada (`/Announcement/Content/<guid>`).
+- **TEKNOFEST** (2026-10-08 incelendi):
+  - Duyuru listesi `teknofest.org/tr/content/announcements/`, detaylar `/tr/duyurular/<slug>/`. Metin `.borderCardMob` içinde, yayım tarihi `.dateText` içinde (`03.10.2026`).
+  - Yarışma takvimi yalnızca görsel olarak yayımlanıyor (okunamıyor). Yarışmalar sayfasında 2026 başvurularının hepsi "Başvuru Tamamlandı" durumunda.
+  - 2026 dönemi: başvurular Ocak 2026'da açıldı (TÜBİTAK haberi 23 Oca), son başvuru 20 Şubat 2026. 2027 başvurularının da benzer şekilde Aralık–Ocak'ta açılması bekleniyor.
 - Geçmiş duyurularla benzetim: sınav tarih+saat, İŞKUR başvuru aralığı, salon/sonuç duyuruları doğru ayıklandı.
 
 ## Site korumalarına karşı ilkeler

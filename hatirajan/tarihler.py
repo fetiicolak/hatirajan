@@ -121,6 +121,19 @@ def _saat_bul(kucuk: str, son: int, sinir: int) -> str | None:
     return f"{int(s):02d}:{d}"
 
 
+BITIS_IZI = re.compile(r"son (?:gün|tarih|başvuru)|kadar|bitiş|sona")
+
+
+def _baslangic_mi(kucuk: str, bas: int, son: int) -> bool:
+    """Tek başvuru tarihi başlangıç mı? Tarihe en yakın ipucu karar verir ("başla" ↔ "son başvuru/kadar")."""
+    sol, sag = kucuk[max(0, bas - 80):bas], kucuk[son:son + 40]
+    ipuclari = []  # (uzaklık, başlangıç mı)
+    for desen, baslangic in ((BITIS_IZI, False), (re.compile("başla"), True)):
+        ipuclari += [(len(sol) - m.end(), baslangic) for m in desen.finditer(sol)]
+        ipuclari += [(m.start() * 1.5, baslangic) for m in desen.finditer(sag)]
+    return bool(ipuclari) and min(ipuclari)[1]
+
+
 def tarihleri_ayikla(metin: str, referans: date) -> list[dict]:
     """Metindeki tarihleri [{tur, tarih, saat, alinti}] olarak döndürür.
 
@@ -138,10 +151,9 @@ def tarihleri_ayikla(metin: str, referans: date) -> list[dict]:
         alinti = metin[max(0, bas - 60):min(len(metin), son + 60)].strip()
 
         if tur == "basvuru":
-            baglam = kucuk[max(0, bas - 80):son + 40]
             if t2:
                 kayitlar = [("basvuru_baslangic", t1), ("basvuru_bitis", t2)]
-            elif "başla" in baglam and not re.search(r"son (gün|tarih)|kadar|bitiş|sona", baglam):
+            elif _baslangic_mi(kucuk, bas, son):
                 kayitlar = [("basvuru_baslangic", t1)]
             else:
                 kayitlar = [("basvuru_bitis", t1)]
@@ -169,11 +181,14 @@ def tarihleri_ayikla(metin: str, referans: date) -> list[dict]:
 
 
 def yayim_tarihi(metin: str) -> date | None:
-    """'24 Ekim 2025 | 14:38' gibi bir başlıktan yayım tarihini okur."""
+    """'24 Ekim 2025 | 14:38' ya da '03.10.2026' gibi bir başlıktan yayım tarihini okur."""
     m = re.search(rf"\b(\d{{1,2}})\s+{_AY}\s+(\d{{4}})", tr_kucuk(metin))
-    if not m:
-        return None
+    s = None if m else re.search(r"\b(\d{1,2})[./](\d{1,2})[./](\d{4})\b", metin)
     try:
-        return date(int(m.group(3)), AYLAR[m.group(2)], int(m.group(1)))
+        if m:
+            return date(int(m.group(3)), AYLAR[m.group(2)], int(m.group(1)))
+        if s:
+            return date(int(s.group(3)), int(s.group(2)), int(s.group(1)))
     except ValueError:
-        return None
+        pass
+    return None

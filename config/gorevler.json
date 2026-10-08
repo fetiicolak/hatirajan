@@ -116,6 +116,89 @@
         }
       ],
       "ozel_hatirlatmalar": []
+    },
+    {
+      "id": "beltek",
+      "ad": "BELTEK Kursları",
+      "aktif": true,
+      "kaynaklar": [
+        {
+          "url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
+          "tur": "takvim"
+        },
+        {
+          "url": "https://beltek.gazi.edu.tr/",
+          "link_deseni": "/Announcement/Content/"
+        }
+      ],
+      "anahtar_kelimeler": [
+        "kayıt",
+        "ön bilgi",
+        "başvuru"
+      ],
+      "dislanan_kelimeler": [],
+      "hatirlatmalar": [
+        {
+          "olay": "basvuru_baslangic",
+          "gun_once": 1,
+          "saat": "20:00"
+        },
+        {
+          "olay": "basvuru_baslangic",
+          "gun_once": 0,
+          "saat": "08:30"
+        },
+        {
+          "olay": "basvuru_bitis",
+          "gun_once": 3,
+          "saat": "09:00"
+        },
+        {
+          "olay": "basvuru_bitis",
+          "gun_once": 1,
+          "saat": "09:00"
+        }
+      ],
+      "ozel_hatirlatmalar": []
+    },
+    {
+      "id": "teknofest",
+      "ad": "TEKNOFEST Yarışmaları",
+      "aktif": true,
+      "kaynaklar": [
+        {
+          "url": "https://www.teknofest.org/tr/content/announcements/",
+          "link_deseni": "/tr/duyurular/"
+        }
+      ],
+      "anahtar_kelimeler": [
+        "başvuru",
+        "üniversite öğrencileri"
+      ],
+      "dislanan_kelimeler": [],
+      "hatirlatmalar": [
+        {
+          "olay": "basvuru_baslangic",
+          "gun_once": 0,
+          "saat": "09:00"
+        },
+        {
+          "olay": "basvuru_bitis",
+          "gun_once": 7,
+          "saat": "09:00"
+        },
+        {
+          "olay": "basvuru_bitis",
+          "gun_once": 3,
+          "saat": "09:00"
+        },
+        {
+          "olay": "basvuru_bitis",
+          "gun_once": 1,
+          "saat": "09:00"
+        }
+      ],
+      "ozel_hatirlatmalar": []
     }
   ]
 }
