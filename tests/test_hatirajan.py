@@ -141,6 +141,12 @@ class Hatirlatma(unittest.TestCase):
         hatirlatma.ozet_gonderildi(self.durum, pazar)
         self.assertFalse(hatirlatma.haftalik_ozet_zamani_mi(self.ayar, self.durum, datetime(2026, 9, 27, 21, 20, tzinfo=TR)))
 
+    def test_haftalik_ozette_basvuru_linki(self):
+        pazar = datetime(2026, 9, 27, 20, 20, tzinfo=TR)
+        self.assertNotIn("📝", hatirlatma.haftalik_ozet(self.ayar, self.durum, pazar))
+        self.gorev["basvuru_linki"] = "https://genclik.iskur.gov.tr/"
+        self.assertIn("📝 Başvuru: https://genclik.iskur.gov.tr/", hatirlatma.haftalik_ozet(self.ayar, self.durum, pazar))
+
 
 class SahteOturum:
     """İnternetsiz kontrol testi için site taklidi."""

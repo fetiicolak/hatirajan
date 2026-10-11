@@ -46,7 +46,7 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ R19 — Varsayılan kurallar: başvuru başlangıcı olay günü 09:00, son başvuru 3 ve 1 gün önce 09:00, sınav 1 gün önce 20:00.
 - ✅✅ R21 — BELTEK kurs kayıt tarihleri takibi (görev `beltek`, 2026-10-07): kayıt takvimi tablosu okunur, yeni/değişen dönemler tek mesajda bildirilir, kayıt başlangıcından 1 gün önce 20:00 ve o gün 08:30 hatırlatılır (kontenjan sırayla dolduğu için).
 - ✅ R22 — TEKNOFEST üniversite öğrencisi yarışmaları başvuru takibi (görev `teknofest`, 2026-10-08): duyurularda "başvuru" / "üniversite öğrencileri" geçenler bildirilir. Hatırlatmalar: başlangıç günü 09:00, son başvurudan 7, 3 ve 1 gün önce 09:00.
-- ✅ R23 — Görev başına başvuru linki (`basvuru_linki`, panelden düzenlenir, 2026-10-11). Yeni duyuru, kayıt takvimi ve başvuru hatırlatmalarına "📝 Başvuru: <link>" satırı olarak eklenir. BELTEK için `/PreRegistration/Home`, TEKNOFEST için yarışmalar sayfası tanımlı.
+- ✅ R23 — Görev başına başvuru linki (`basvuru_linki`, panelden düzenlenir, 2026-10-11). Yeni duyuru, kayıt takvimi ve başvuru hatırlatmalarına "📝 Başvuru: <link>" satırı olarak eklenir. BELTEK için `/PreRegistration/Home`, TEKNOFEST için yarışmalar sayfası tanımlı. İŞKUR için `https://genclik.iskur.gov.tr/` tanımlı (2026-10-11); adres Gazi'nin 2025 duyurusundan alındı, yerelden çözülmüyor. Erasmus için kalıcı link yok: form her dönem duyurudaki drive.gazi.edu.tr linkinden açılıyor, o link duyuru mesajına 📎 olarak ekleniyor. Haftalık özette de görev başına "📝 Başvuru" satırı var.
 - ✅ R20 — Her taramadan sonra (08:00 / 17:00) kısa rapor, yeni bilgi yoksa da gelir ("yeni bilgi yok"); panelden kapatılabilir (`ayarlar.tarama_raporu.aktif`, 2026-09-29).
 
 ## Alınan kararlar
@@ -78,7 +78,7 @@ hatirajan/hatirlatma.py  # kural planlama, vadesi gelen hatırlatma (36 saat tol
 hatirajan/bildirim.py    # Telegram (otel-fiyat-takip/src/bildirim.py'den uyarlandı)
 hatirajan/depo.py        # config/gorevler.json ve data/durum.json okuma/yazma
 docs/                    # panel: index.html, app.js (planla() Python ile aynı mantık), style.css
-tests/test_hatirajan.py  # 27 test; tests/ornekler/ gerçek Gazi duyuru metinleri, beltek_takvim.html + panel_durum.json (panel önizleme)
+tests/test_hatirajan.py  # 28 test; tests/ornekler/ gerçek Gazi duyuru metinleri, beltek_takvim.html + panel_durum.json (panel önizleme)
 .claude/launch.json      # "panel" önizleme sunucusu (http://localhost:8765/docs/?yerel=ornek)
 ```
 

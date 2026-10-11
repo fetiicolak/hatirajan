@@ -139,6 +139,8 @@ def haftalik_ozet(ayar: dict, durum: dict, simdi: datetime) -> str:
             satirlar.append(f"  • {TUR_ADLARI.get(o['tur'], o['tur'])}: {okunur_tarih(gun)} ({_kalan(o['tarih'], simdi)})")
         if not yaklasan:
             satirlar.append("  Yaklaşan tarih yok — takipte.")
+        if gorev.get("basvuru_linki"):
+            satirlar.append(f"  📝 Başvuru: {gorev['basvuru_linki']}")
 
     hatali = [url for url, k in durum.get("kaynaklar", {}).items() if k.get("hata_sayisi", 0) > 0]
     if hatali:
