@@ -68,6 +68,7 @@ Bundan sonra her şey otomatik.
 - **Hatırlatma kuralları**: her satır bir mesaj. Örneğin *Son başvuru · 7 gün önce · 10:00* satırını eklersen, o olay için bir hatırlatma daha gelir. **Planlanan hatırlatmalar** listesi, kaydetmeden önce sonucu gösterir.
 - **Özel hatırlatmalar**: serbest tarih, saat ve not ile tek seferlik mesaj.
 - **Takip ayarları**:
+  - *Başvuru linki*: başvurunun yapılacağı sayfa. Yeni duyuru, kayıt takvimi ve başvuru hatırlatması mesajlarının sonuna "📝 Başvuru" satırı olarak eklenir.
   - *Kaynak sayfalar*: duyuru listesi linkleri. Gazi'nin `…/view/announcement-list/1?Type=1` sayfaları ve `?SearchString=` arama sayfaları doğrudan çalışır.
   - Kayıt takvimini tablo olarak yayımlayan sayfalar (ör. BELTEK *Kurs Takvimi*) `config/gorevler.json`'da `{"url": "…", "tur": "takvim"}` olarak yazılır. Satırlardaki ilk iki tarih kayıt başlangıcı ve bitişi sayılır, takvim değişirse haber verilir.
   - *Anahtar kelimeler*: duyuru başlığında aranır. `erasmus & dil sınav` yazarsan ikisinin birden geçmesi gerekir.

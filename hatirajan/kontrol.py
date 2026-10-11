@@ -81,6 +81,8 @@ def _duyuru_mesaji(gorev: dict, kayit: dict, guncellenen: list[str], hatirlatmal
     satirlar.append(f"🔗 {kayit['url']}")
     for ek in kayit.get("ekler", [])[:3]:
         satirlar.append(f"📎 {ek}")
+    if gorev.get("basvuru_linki"):
+        satirlar.append(f"📝 Başvuru: {gorev['basvuru_linki']}")
     if hatirlatmalar:
         satirlar.append("⏰ Hatırlatmalar: " + ", ".join(hatirlatmalar))
     return "\n".join(satirlar)
@@ -183,6 +185,8 @@ def _takvimi_isle(gorev: dict, gd: dict, url: str, satirlar: list[TakvimSatiri],
         return 0
     hatirlatmalar = plan_ozeti(gorev, yeni_olaylar, simdi)
     mesaj = [f"🗓️ <b>{html.escape(gorev['ad'])}</b> · Kayıt takvimi", *satirlar_mesaj, f"🔗 {url}"]
+    if gorev.get("basvuru_linki"):
+        mesaj.append(f"📝 Başvuru: {gorev['basvuru_linki']}")
     if hatirlatmalar:
         mesaj.append("⏰ Hatırlatmalar: " + ", ".join(hatirlatmalar[:4])
                      + (f" (+{len(hatirlatmalar) - 4} tane daha)" if len(hatirlatmalar) > 4 else ""))

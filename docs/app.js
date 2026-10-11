@@ -230,6 +230,8 @@ function cizGorevler() {
           : `<li class="bos">Henüz bildirilen duyuru yok.</li>`}</ul>
 
         <h3>Takip ayarları</h3>
+        <label>Başvuru linki (bildirim ve hatırlatma mesajlarına eklenir)
+          <input type="url" data-f="basvuru_linki" value="${kacis(g.basvuru_linki || "")}" placeholder="https://…" spellcheck="false"></label>
         <label>Kaynak sayfalar (her satıra bir link)
           <textarea data-f="kaynaklar" spellcheck="false">${kacis(kaynaklar)}</textarea></label>
         <label>Anahtar kelimeler (her satıra bir tane; “a &amp; b” = ikisi birden geçmeli)
@@ -282,7 +284,8 @@ document.addEventListener("input", (e) => {
       const eski = Object.fromEntries((g.kaynaklar || []).filter((k) => typeof k !== "string").map((k) => [k.url, k]));
       g.kaynaklar = satirlar(el.value).map((u) => eski[u] || u);
     } else if (el.tagName === "TEXTAREA") g[f] = satirlar(el.value);
-    else g[f] = el.value;
+    else if (f === "basvuru_linki" && !el.value.trim()) delete g[f];
+    else g[f] = el.value.trim();
   } else if (el.dataset.k) {
     const liste = el.closest("[data-liste]").dataset.liste;
     const oge = g[liste][Number(el.closest("[data-i]").dataset.i)];
@@ -347,6 +350,8 @@ function dogrula() {
     if (!(g.kaynaklar || []).length) hatalar.push(`“${ad}”: en az bir kaynak link gerekli.`);
     if ((g.kaynaklar || []).some((k) => !/^https?:\/\//.test(typeof k === "string" ? k : k.url)))
       hatalar.push(`“${ad}”: kaynaklar http:// veya https:// ile başlamalı.`);
+    if (g.basvuru_linki && !/^https?:\/\//.test(g.basvuru_linki))
+      hatalar.push(`“${ad}”: başvuru linki http:// veya https:// ile başlamalı.`);
     if (!(g.anahtar_kelimeler || []).length) hatalar.push(`“${ad}”: en az bir anahtar kelime gerekli.`);
     if ((g.ozel_hatirlatmalar || []).some((o) => !o.tarih)) hatalar.push(`“${ad}”: özel hatırlatmada tarih boş.`);
   }

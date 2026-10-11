@@ -69,6 +69,8 @@ def _mesaj(gorev: dict, p: dict, simdi: datetime) -> str:
         mesaj += f"\n📄 {html.escape(olay['duyuru_baslik'])}"
     if olay.get("duyuru_url"):
         mesaj += f"\n🔗 {olay['duyuru_url']}"
+    if gorev.get("basvuru_linki") and olay["tur"] in ("basvuru_baslangic", "basvuru_bitis"):
+        mesaj += f"\n📝 Başvuru: {gorev['basvuru_linki']}"
     return mesaj
 
 

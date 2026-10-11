@@ -237,6 +237,7 @@ class Takvim(unittest.TestCase):
         self.html = (ORNEKLER / "beltek_takvim.html").read_text(encoding="utf-8")
         self.ayar = {"ayarlar": {}, "gorevler": [{
             "id": "beltek", "ad": "BELTEK Kursları", "kaynaklar": [self.KAYNAK],
+            "basvuru_linki": "https://beltek.gazi.edu.tr/PreRegistration/Home",
             "anahtar_kelimeler": ["kayıt"], "hatirlatmalar": KURALLAR}]}
         self.durum = {"gorevler": {}, "kaynaklar": {}, "gonderilen_hatirlatmalar": {}}
         self.giden = []
@@ -258,6 +259,7 @@ class Takvim(unittest.TestCase):
         mesaj = self.giden[0]
         self.assertIn("127. dönem (2 aylık): kayıt 9 Kasım", mesaj)
         self.assertNotIn("126. dönem", mesaj)  # kaydı bitmiş dönem
+        self.assertIn("📝 Başvuru: https://beltek.gazi.edu.tr/PreRegistration/Home", mesaj)
         olaylar = self.durum["gorevler"]["beltek"]["olaylar"]
         self.assertIn(("basvuru_baslangic", "2026-11-09"), [(o["tur"], o["tarih"]) for o in olaylar])
 
@@ -268,6 +270,7 @@ class Takvim(unittest.TestCase):
         self.assertEqual(n, 1)
         self.assertIn("Başvuru başlangıcı: <b>bugün</b>", self.giden[-1])
         self.assertIn("127. dönem", self.giden[-1])
+        self.assertIn("📝 Başvuru: https://beltek.gazi.edu.tr/PreRegistration/Home", self.giden[-1])
 
     def test_takvim_degisirse_eski_tarih_gecersiz(self):
         self.calistir(self.html, 2026, 10, 7, 8)

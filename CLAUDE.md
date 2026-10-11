@@ -16,11 +16,12 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ `otomatik` telafi modu canlıda doğrulandı (30 Eyl – 6 Eki): her gün iki tarama raporu geldi, 4 Ekim haftalık özeti geldi. Hiçbir tarama atlanmadı.
 - ⚠️ GitHub günde 48 zamanlanmış çalıştırmanın yalnızca 4–6'sını başlatıyor. Bu yüzden raporlar 08:00/17:00 yerine 1–6 saat gecikmeli geliyor (ör. 6 Eki 13:45, 30 Eyl 21:25).
 - ✅ cron-job.org dış zamanlayıcı canlıda doğrulandı (2026-10-07). Gece boyunca her xx:05/xx:35 çalıştırması dakikasında geldi; sabah taraması 08:05'te yapıldı. Gecikme sorunu çözüldü, GitHub cron'u yedek olarak kalıyor.
-- ✅🔲 BELTEK görevi eklendi (2026-10-07). Canlı kuru denemede takvim doğru okundu; ilk gerçek taramada tek "Kayıt takvimi" mesajı bekleniyor.
+- ✅✅ BELTEK görevi canlıda doğrulandı: "Kayıt takvimi" mesajı geldi (kullanıcı onayı, 2026-10-11).
 - ✅🔲 TEKNOFEST görevi eklendi (2026-10-08). Canlı kuru denemede 13 duyuru okundu, ilk tarama sessiz geçti.
   - Aynı değişiklikle tarih ayıklayıcı düzeltildi: tek başvuru tarihinde tarihe en yakın "başla" ya da "son başvuru/kadar" ipucu karar veriyor.
   - Yayım tarihi kutusu artık metinden çıkarılıyor; sayısal biçim (`gg.aa.yyyy`) de okunuyor.
-**Son güncelleme:** 2026-10-08
+- ✅ Başvuru linki alanı eklendi (2026-10-11); panel önizlemesinde alan ve kaydetme doğrulandı.
+**Son güncelleme:** 2026-10-11
 
 ## Gereksinimler (kullanıcının istekleri)
 ✅ = kodlandı ve test edildi · ✅✅ = canlıda doğrulandı · ✅🔲 = canlı doğrulama bekliyor
@@ -43,8 +44,9 @@ Belirli web sayfalarını her gün otomatik kontrol eden, beklenen bir duyuru/ba
 - ✅ R17 — Görev başına hatırlatma sayısı panelden serbestçe artırılıp azaltılır (her satır = bir mesaj).
 - ✅ R18 — Hiçbir maddi yük yok (otel-fiyat-takip ile aynı yaklaşım).
 - ✅ R19 — Varsayılan kurallar: başvuru başlangıcı olay günü 09:00, son başvuru 3 ve 1 gün önce 09:00, sınav 1 gün önce 20:00.
-- ✅ R21 — BELTEK kurs kayıt tarihleri takibi (görev `beltek`, 2026-10-07): kayıt takvimi tablosu okunur, yeni/değişen dönemler tek mesajda bildirilir, kayıt başlangıcından 1 gün önce 20:00 ve o gün 08:30 hatırlatılır (kontenjan sırayla dolduğu için).
+- ✅✅ R21 — BELTEK kurs kayıt tarihleri takibi (görev `beltek`, 2026-10-07): kayıt takvimi tablosu okunur, yeni/değişen dönemler tek mesajda bildirilir, kayıt başlangıcından 1 gün önce 20:00 ve o gün 08:30 hatırlatılır (kontenjan sırayla dolduğu için).
 - ✅ R22 — TEKNOFEST üniversite öğrencisi yarışmaları başvuru takibi (görev `teknofest`, 2026-10-08): duyurularda "başvuru" / "üniversite öğrencileri" geçenler bildirilir. Hatırlatmalar: başlangıç günü 09:00, son başvurudan 7, 3 ve 1 gün önce 09:00.
+- ✅ R23 — Görev başına başvuru linki (`basvuru_linki`, panelden düzenlenir, 2026-10-11). Yeni duyuru, kayıt takvimi ve başvuru hatırlatmalarına "📝 Başvuru: <link>" satırı olarak eklenir. BELTEK için `/PreRegistration/Home`, TEKNOFEST için yarışmalar sayfası tanımlı.
 - ✅ R20 — Her taramadan sonra (08:00 / 17:00) kısa rapor, yeni bilgi yoksa da gelir ("yeni bilgi yok"); panelden kapatılabilir (`ayarlar.tarama_raporu.aktif`, 2026-09-29).
 
 ## Alınan kararlar

@@ -121,6 +121,7 @@
       "id": "beltek",
       "ad": "BELTEK Kursları",
       "aktif": true,
+      "basvuru_linki": "https://beltek.gazi.edu.tr/PreRegistration/Home",
       "kaynaklar": [
         {
           "url": "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi",
@@ -165,6 +166,7 @@
       "id": "teknofest",
       "ad": "TEKNOFEST Yarışmaları",
       "aktif": true,
+      "basvuru_linki": "https://www.teknofest.org/tr/competitions/",
       "kaynaklar": [
         {
           "url": "https://www.teknofest.org/tr/content/announcements/",
