@@ -110,7 +110,8 @@
         "gazi.edu.tr/view/announcement/326982": "2026-11-09",
         "odm.gazi.edu.tr/view/announcement/327008": "2026-11-10",
         "gazi.edu.tr/view/announcement/327007": "2026-11-10",
-        "gazi.edu.tr/view/announcement/327009": "2026-11-10"
+        "gazi.edu.tr/view/announcement/327009": "2026-11-10",
+        "mediko.gazi.edu.tr/view/announcement/327013": "2026-11-11"
       },
       "taranan_kaynaklar": [
         "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
@@ -457,52 +458,52 @@
     "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://gazi.edu.tr/view/announcement-list/1?type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://beltek.gazi.edu.tr/": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     },
     "https://www.teknofest.org/tr/content/announcements/": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-11T08:05+03:00"
+      "son_basari": "2026-11-11T17:05+03:00"
     }
   },
   "gonderilen_hatirlatmalar": {
@@ -511,6 +512,6 @@
     "beltek|basvuru_baslangic|2026-11-09|1|20:00": "2026-11-08T20:05+03:00",
     "beltek|basvuru_baslangic|2026-11-09|0|08:30": "2026-11-09T08:35+03:00"
   },
-  "son_kontrol": "2026-11-11T08:05+03:00",
+  "son_kontrol": "2026-11-11T17:05+03:00",
   "son_ozet_haftasi": "2026-W45"
 }
