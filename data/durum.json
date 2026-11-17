@@ -114,7 +114,9 @@
         "mediko.gazi.edu.tr/view/announcement/327013": "2026-11-11",
         "gazi.edu.tr/view/announcement/327038": "2026-11-13",
         "gazi.edu.tr/view/announcement/327048": "2026-11-13",
-        "mediko.gazi.edu.tr/view/announcement/327059": "2026-11-16"
+        "mediko.gazi.edu.tr/view/announcement/327059": "2026-11-16",
+        "mediko.gazi.edu.tr/view/announcement/327068": "2026-11-17",
+        "gazi.edu.tr/view/announcement/327082": "2026-11-17"
       },
       "taranan_kaynaklar": [
         "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1",
@@ -123,6 +125,24 @@
         "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur"
       ],
       "duyurular": [
+        {
+          "url": "https://gazi.edu.tr/view/announcement/327082?type=1&title=iskur-genclik-programi-sonuc-ve-kursiyer-yerlestirme-listesi-aciklandi",
+          "baslik": "İŞKUR Gençlik Programı Sonuç ve Kursiyer Yerleştirme Listesi Açıklandı",
+          "kategori": "sonuc",
+          "bulundu": "2026-11-17T17:05+03:00",
+          "olaylar": [],
+          "ekler": [],
+          "yayim": "2026-11-17"
+        },
+        {
+          "url": "https://mediko.gazi.edu.tr/view/announcement/327068?type=1&title=iskur-genclik-programi-sonuc-ve-kursiyer-yerlestirmesi-listesi-gelen-talepler-dogrultusunda-listeler-revize-edilerek-guncellenecektir",
+          "baslik": "İŞKUR Gençlik Programı Sonuç ve Kursiyer Yerleştirmesi Listesi Gelen Talepler Doğrultusunda Listeler Revize Edilerek Güncellenecektir.",
+          "kategori": "sonuc",
+          "bulundu": "2026-11-17T17:05+03:00",
+          "olaylar": [],
+          "ekler": [],
+          "yayim": "2026-11-16"
+        },
         {
           "url": "https://gazi.edu.tr/view/announcement/326820?type=1&title=iskur-genclik-programi-basvuru-suresi-uzatildi",
           "baslik": "İŞKUR Gençlik Programı Başvuru Süresi Uzatıldı",
@@ -461,52 +481,52 @@
     "https://mediko.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://odm.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://gazi.edu.tr/view/announcement-list/1?type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://mediko.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=i%C5%9Fkur": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://erasmus.gazi.edu.tr/view/announcement-list/1?Type=1": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://ydyo.gazi.edu.tr/view/announcement-list?id=1&type=1&SearchString=erasmus": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://beltek.gazi.edu.tr/Content/Index/Kurs-Takvimi": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://beltek.gazi.edu.tr/": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     },
     "https://www.teknofest.org/tr/content/announcements/": {
       "hata_sayisi": 0,
       "uyari_gonderildi": false,
-      "son_basari": "2026-11-17T08:05+03:00"
+      "son_basari": "2026-11-17T17:05+03:00"
     }
   },
   "gonderilen_hatirlatmalar": {
@@ -517,6 +537,6 @@
     "beltek|basvuru_bitis|2026-11-17|3|09:00": "2026-11-14T09:05+03:00",
     "beltek|basvuru_bitis|2026-11-17|1|09:00": "2026-11-16T09:05+03:00"
   },
-  "son_kontrol": "2026-11-17T08:05+03:00",
+  "son_kontrol": "2026-11-17T17:05+03:00",
   "son_ozet_haftasi": "2026-W46"
 }
